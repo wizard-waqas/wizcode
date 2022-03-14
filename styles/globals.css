@@ -1,16 +1,38 @@
-html,
-body {
-  padding: 0;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
+  font-family: "Times New Roman";
+  /*font-weight: 500;*/
+  color: white;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+h1, h2, h3, h4, h5, h6{
+  font-family: "Fredoka One", sans-serif;
 }
 
-* {
+body{
   box-sizing: border-box;
+  background-color: var(--darkgrey);
+  margin: 0 10%;
+}
+
+:root{
+  --blue: #3B66FF;
+  --gold: #FFD43B;
+  --darkgold: #D0AE33;
+  --darkblue: #1C223C;
+  --darkgrey: #161515;
+  --lightgrey: #D8E0FF;
+}
+
+.text-blue{
+  color: var(--blue);
+}
+
+.text-gold{
+  color: var(--gold);
 }
