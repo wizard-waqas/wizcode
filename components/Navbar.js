@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Navbar() {
     return (
         <header className={"flex p-6 justify-between items-center"}>
-            <img className={"w-16 cursor-pointer"} src="logo.png" alt="logo"/>
+            <img className={"w-16 cursor-pointer"} src="/logo.png" alt="logo"/>
 
             <ul className={"list-none flex text-lg"}>
                 <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
@@ -17,7 +17,7 @@ export default function Navbar() {
                 </li>
 
                 <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
-                    <Link href="lessons/">
+                    <Link href="/lessons/">
                         <a className={""}>
                             LESSONS
                         </a>
