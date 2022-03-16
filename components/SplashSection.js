@@ -23,7 +23,7 @@ export default function SplashSection() {
             </div>
 
             <Tilt className={"w-1/2 self-center"}>
-                <img className={"m-4 drop-shadow-lg rounded-lg"} data-tilt src={"editorart.png"}/>
+                <img className={"m-4 drop-shadow-lg rounded-lg"} data-tilt src={"editorart.png"} alt={"coding editor art"}/>
             </Tilt>
         </div>
     )
