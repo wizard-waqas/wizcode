@@ -15,6 +15,10 @@ module.exports = {
       "darkgrey": "#161515",
       "lightgrey": "#D8E0FF"
     },
+    fontFamily: {
+        "fredoka": ["Fredoka One"],
+        "open": ["Open Sans"]
+    },
     extend: {
       dropShadow: {
         "lg": '0 0 20px rgba(255, 212, 59, 0.5)',

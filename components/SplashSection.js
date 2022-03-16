@@ -1,6 +1,5 @@
 /* React JS Template using functions */
 import React from "react"
-// import styles from '../styles/SplashSection.module.css'
 import Tilt from 'react-parallax-tilt';
 
 export default function SplashSection() {
@@ -8,13 +7,13 @@ export default function SplashSection() {
         <div className={"flex w-full mt-8"}>
             <div className={"w-1/2"}>
                 <h1 className={"text-6xl mb-2"}>
-                    <span className={"text-blue"}>Wiz</span>
-                    <span className={"text-gold"}>Code</span>
+                    <span className={"font-fredoka text-blue"}>Wiz</span>
+                    <span className={"font-fredoka text-gold"}>Code</span>
                 </h1>
 
                 <h2 className={"text-xl"}>
                     Learn to teach yourself
-                    <span className={"text-gold"}> anything</span>.
+                    <span className={"font-fredoka text-gold"}> anything</span>.
                     </h2>
 
                 <form className={"mt-16"}>
