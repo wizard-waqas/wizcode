@@ -21,8 +21,6 @@ export default function LessonsPage(props) {
 
     return (
         <div>
-            <Navbar/>
-
             <div className={"flex flex-wrap"}>
                 {lessons.map((lesson) => (
                     <LessonCard key={lesson.title} link={lesson.link} img={lesson.img} title={lesson.title}
