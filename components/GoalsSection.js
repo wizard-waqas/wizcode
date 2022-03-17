@@ -6,7 +6,7 @@ export default function GoalsSection() {
             <h2 className={"text-4xl"}>Our Goals</h2>
             <div className="flex flex-wrap justify-around">
 
-                <GoalCard 
+                <GoalCard
                     icon={"code.png"}
                     title={"Programming Fundamentals"} 
                     paragraph={
@@ -64,8 +64,8 @@ export default function GoalsSection() {
 
 function GoalCard({ icon, title, paragraph }){
     return (
-        <div className="bg-blue p-4 my-4 rounded-2xl flex-column flex w-full items-center lg:basis-5/12">
-            <img className="w-24 h-24 mr-4" src={"icons/"+icon} />
+        <div className="drop-shadow-xl bg-blue p-4 my-8 rounded-2xl flex-column flex w-full items-center lg:basis-5/12">
+            <img className="w-24 h-24 mr-4" src={"icons/"+icon} alt={"goal icon"}/>
             <div className="">
                 <h3 className=" text-xl">{ title }</h3>
                 <p className="text-md text-lightgrey">

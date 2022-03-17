@@ -5,7 +5,6 @@ import SplashSection from "../components/SplashSection";
 export default function Home() {
     return (
         <div>
-            <Navbar/>
             <SplashSection/>
             <GoalsSection/>
         </div>

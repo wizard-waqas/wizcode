@@ -18,7 +18,6 @@ export default function LessonPage() {
     return (
 
         <div className={"h-full"}>
-            <Navbar/>
 
             <div className={"h-full flex flex-row"}>
                 <iframe className="w-1/2 h-screen fixed" src="https://replit.com/@waqasp/wizcode-blank?lite=true"/>
