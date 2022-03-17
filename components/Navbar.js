@@ -56,23 +56,23 @@ function SignInButton() {
 
     useEffect(() => {
         return () => {
-            toast.success("Logged in")
+            toast.success("Signed in")
         }
     }, [])
 
     return (
         <button className={"btn-google"} onClick={signInWithGoogle}>
-            <button className={"px-4 py-4 bg-darkgold rounded-lg"}>Sign In with Google</button>
+            <button className={"px-4 py-4 bg-darkgold rounded-lg"}>Sign in with Google</button>
         </button>
     )
 }
 
-function SignOutButton() {
-
+function SignOutButton({ user }) {
     useEffect(() => {
         return () => {
-            toast.success("Successfully logged out")
+            toast.success("Successfully signed out")
         }
     }, [])
-    return <button onClick={() => auth.signOut()}>Sign Out</button>
+
+    return <button className={"px-4 py-4 bg-darkgold rounded-lg"} onClick={() => auth.signOut()}>Sign Out</button>
 }
