@@ -7,7 +7,7 @@ export default function GoalsSection() {
             <div className="flex flex-wrap justify-around">
 
                 <GoalCard
-                    icon={"code.png"}
+                    icon={"coding.png"}
                     title={"Programming Fundamentals"} 
                     paragraph={
                         <Fragment>
