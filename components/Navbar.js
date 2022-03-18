@@ -36,6 +36,14 @@ export default function Navbar() {
                         </a>
                     </Link>
                 </li>
+
+                <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
+                    <Link href="/invoices">
+                        <a className={""}>
+                            INVOICES
+                        </a>
+                    </Link>
+                </li>
             </ul>
 
             <a href="#">
@@ -67,7 +75,7 @@ function SignInButton() {
     )
 }
 
-function SignOutButton({ user }) {
+function SignOutButton() {
     useEffect(() => {
         return () => {
             toast.success("Successfully signed out")
