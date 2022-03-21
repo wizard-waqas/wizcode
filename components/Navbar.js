@@ -6,7 +6,12 @@ import {firestore, auth, googleAuthProvider} from "../lib/firebase";
 import {UserContext} from "../lib/context";
 
 export default function Navbar() {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    console.log(user)
+
+    useEffect(() => {
+        localStorage.setItem("user", user)
+    }, [user])
 
     return (
         <header className={"flex p-6 justify-between items-center"}>
@@ -30,8 +35,8 @@ export default function Navbar() {
                 </li>
 
                 <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
-                    <Link href="#">
-                        <a className={""}>
+                    <Link href="https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1" passHref>
+                        <a target={"_blank"} className={""}>
                             MERCH
                         </a>
                     </Link>
@@ -69,8 +74,8 @@ function SignInButton() {
     }, [])
 
     return (
-        <button className={"btn-google"} onClick={signInWithGoogle}>
-            <button className={"px-4 py-4 bg-darkgold rounded-lg"}>Sign in with Google</button>
+        <button className={"btn-google px-4 py-4 bg-darkgold rounded-lg"} onClick={signInWithGoogle}>
+            Sign in with Google
         </button>
     )
 }
