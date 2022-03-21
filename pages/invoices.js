@@ -1,6 +1,5 @@
 /* React JS Template using functions */
-import React, { useContext } from "react"
-import {loadStripe} from "@stripe/stripe-js";
+import React, {useContext} from "react"
 import Stripe from "stripe";
 import {UserContext} from "../lib/context";
 
@@ -23,14 +22,18 @@ export const getServerSideProps = async () => {
 
 
     return {
-        props: {invoices, customer}
+        props: {
+            invoices,
+            customer,
+        }
     }
 }
 
-export default function InvoicesPage({ invoices, customer}) {
-    console.log(invoices)
+export default function InvoicesPage({ invoices, customer, params }) {
+    console.log(params.toString())
+
     return (
-        <div>
+        <div className={"flex"}>
             {invoices.map(invoice => (
                 <Invoice invoice={invoice}/>
             ))}
@@ -38,20 +41,18 @@ export default function InvoicesPage({ invoices, customer}) {
     );
 };
 
-function Invoice({ invoice }){
-
-
+function Invoice({ invoice }) {
     return (
-        <div>
+        <div className={"bg-blue rounded-xl p-4 m-4"}>
             <h1>{invoice.number}</h1>
-            <p>{getAmountDue(invoice.amount_due)}</p>
-            <span>Paid: <input type={"checkbox"} checked={invoice.paid}/></span>
+            <p>Amount Due: {getAmountDue(invoice.amount_due)}</p>
+            <span>Paid: <input type={"checkbox"} checked={invoice.paid} readOnly/></span>
+            <a href={invoice.hosted_invoice_url}>Pay Here</a>
         </div>
     )
 }
 
-function getAmountDue(amountDue){
+function getAmountDue(amountDue) {
     const dollars = amountDue / 100;
-    console.log(dollars)
-    return dollars.toLocaleString("en-US", {style:"currency", currency:"USD"});
+    return dollars.toLocaleString("en-US", {style: "currency", currency: "USD"});
 }
