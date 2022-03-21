@@ -61,7 +61,10 @@ export default function Navbar() {
 
 function SignInButton() {
     const signInWithGoogle = async () => {
-        await auth.signInWithPopup(googleAuthProvider);
+        auth.signInWithPopup(googleAuthProvider).then((data) => {
+            const user = data.user
+            localStorage.setItem("email", JSON.stringify({email: user.email}))
+        });
     }
 
     useEffect(() => {
