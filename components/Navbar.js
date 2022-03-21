@@ -6,12 +6,7 @@ import {firestore, auth, googleAuthProvider} from "../lib/firebase";
 import {UserContext} from "../lib/context";
 
 export default function Navbar() {
-    const { user } = useContext(UserContext);
-    console.log(user)
-
-    useEffect(() => {
-        localStorage.setItem("user", user)
-    }, [user])
+    const {user} = useContext(UserContext);
 
     return (
         <header className={"flex p-6 justify-between items-center"}>
@@ -35,7 +30,9 @@ export default function Navbar() {
                 </li>
 
                 <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
-                    <Link href="https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1" passHref>
+                    <Link
+                        href="https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1"
+                        passHref>
                         <a target={"_blank"} className={""}>
                             MERCH
                         </a>
@@ -81,11 +78,16 @@ function SignInButton() {
 }
 
 function SignOutButton() {
+    const signOutwithGoogle = async () => {
+        await auth.signOut()
+        localStorage.removeItem("email")
+    }
+
     useEffect(() => {
         return () => {
             toast.success("Successfully signed out")
         }
     }, [])
 
-    return <button className={"px-4 py-4 bg-darkgold rounded-lg"} onClick={() => auth.signOut()}>Sign Out</button>
+    return <button className={"px-4 py-4 bg-darkgold rounded-lg"} onClick={signOutwithGoogle}>Sign Out</button>
 }
