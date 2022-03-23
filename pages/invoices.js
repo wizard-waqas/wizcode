@@ -1,7 +1,6 @@
 /* React JS Template using functions */
-import React, {useContext} from "react"
+import React from "react"
 import Stripe from "stripe";
-import {UserContext} from "../lib/context";
 
 export const getServerSideProps = async () => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -9,6 +8,7 @@ export const getServerSideProps = async () => {
     })
 
     const customer = await stripe.customers.list({
+        // email: localStorage.getItem("email") // this doesnt work since you cant access localstorage from the server side
         email: "wp23@njit.edu"
     }).then(customers => (
         // return the first customer from the returned data
@@ -29,8 +29,7 @@ export const getServerSideProps = async () => {
     }
 }
 
-export default function InvoicesPage({ invoices, customer, params }) {
-    console.log(params.toString())
+export default function InvoicesPage({ invoices, customer }) {
 
     return (
         <div className={"flex"}>
@@ -41,7 +40,7 @@ export default function InvoicesPage({ invoices, customer, params }) {
     );
 };
 
-function Invoice({ invoice }) {
+function Invoice({invoice}) {
     return (
         <div className={"bg-blue rounded-xl p-4 m-4"}>
             <h1>{invoice.number}</h1>
