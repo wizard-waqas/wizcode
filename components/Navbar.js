@@ -30,9 +30,19 @@ export default function Navbar() {
                 </li>
 
                 <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
-                    <Link href="#">
-                        <a className={""}>
+                    <Link
+                        href="https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1"
+                        passHref>
+                        <a target={"_blank"} className={""}>
                             MERCH
+                        </a>
+                    </Link>
+                </li>
+
+                <li className={"px-4 py-2 transition-all hover:border-b-2 hover:border-b-gold"}>
+                    <Link href="/invoices">
+                        <a className={""}>
+                            INVOICES
                         </a>
                     </Link>
                 </li>
@@ -51,7 +61,10 @@ export default function Navbar() {
 
 function SignInButton() {
     const signInWithGoogle = async () => {
-        await auth.signInWithPopup(googleAuthProvider);
+        auth.signInWithPopup(googleAuthProvider).then((data) => {
+            const user = data.user
+            localStorage.setItem("email", JSON.stringify({email: user.email}))
+        });
     }
 
     useEffect(() => {
@@ -61,18 +74,23 @@ function SignInButton() {
     }, [])
 
     return (
-        <button className={"btn-google"} onClick={signInWithGoogle}>
-            <button className={"px-4 py-4 bg-darkgold rounded-lg"}>Sign in with Google</button>
+        <button className={"btn-google px-4 py-4 bg-darkgold rounded-lg"} onClick={signInWithGoogle}>
+            Sign in with Google
         </button>
     )
 }
 
-function SignOutButton({ user }) {
+function SignOutButton() {
+    const signOutwithGoogle = async () => {
+        await auth.signOut()
+        localStorage.removeItem("email")
+    }
+
     useEffect(() => {
         return () => {
             toast.success("Successfully signed out")
         }
     }, [])
 
-    return <button className={"px-4 py-4 bg-darkgold rounded-lg"} onClick={() => auth.signOut()}>Sign Out</button>
+    return <button className={"px-4 py-4 bg-darkgold rounded-lg"} onClick={signOutwithGoogle}>Sign Out</button>
 }
