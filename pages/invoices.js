@@ -1,53 +1,48 @@
 /* React JS Template using functions */
-import React from "react"
-import Stripe from "stripe";
+import React, {useContext, useEffect, useState} from "react"
+import {UserContext} from "../lib/context";
 
-export const getServerSideProps = async () => {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-        apiVersion: "2020-08-27",
-    })
+export default function InvoicesPage() {
+    const {user} = useContext(UserContext);
+    const [invoices, setinvoices] = useState([])
 
-    const customer = await stripe.customers.list({
-        // email: localStorage.getItem("email") // this doesnt work since you cant access localstorage from the server side
-        email: "wp23@njit.edu"
-    }).then(customers => (
-        // return the first customer from the returned data
-        customers.data[0]
-    ))
-
-    const invoices = await stripe.invoices.list({
-        customer: customer.id,
-        limit: 3,
-    }).then(invoices => invoices.data)
-
-
-    return {
-        props: {
-            invoices,
-            customer,
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(`/api/stripe/${user.email}`)
+            const data = await response.json()
+            setinvoices(data.invoices)
         }
-    }
-}
 
-export default function InvoicesPage({ invoices, customer }) {
+        if (user !== null) {
+            fetchData().then(value => console.log(value))
+        }
+    }, [user])
 
     return (
         <div className={"flex"}>
-            {invoices.map(invoice => (
-                <Invoice invoice={invoice}/>
-            ))}
+            {invoices ?
+                invoices.map(invoice => (
+                    <Invoice key={invoice.number} invoice={invoice}/>
+                ))
+                :
+                <h3>No invoices to display.</h3>
+            }
         </div>
     );
 };
 
 function Invoice({invoice}) {
     return (
-        <div className={"bg-blue rounded-xl p-4 m-4"}>
-            <h1>{invoice.number}</h1>
-            <p>Amount Due: {getAmountDue(invoice.amount_due)}</p>
-            <span>Paid: <input type={"checkbox"} checked={invoice.paid} readOnly/></span>
-            <a href={invoice.hosted_invoice_url}>Pay Here</a>
+        <div className={"flex bg-blue rounded-xl p-4 m-4 w-4/5"}>
+            <img className={"w-28 mr-4"} src={"/icons/lesson.png"} alt={"lesson icon"}/>
+            <div className={"relative w-full"}>
+                <h1 className={"absolute top-0 right-4"}>{invoice.number}</h1>
+                <p>Amount Due: {getAmountDue(invoice.amount_due)}</p>
+                <span>Paid: <input type={"checkbox"} checked={invoice.paid} readOnly/></span>
+                <a className={"absolute bg-darkgold p-2 rounded-lg bottom-0 right-4"} href={invoice.hosted_invoice_url}>Pay Here &gt;</a>
+            </div>
         </div>
+
     )
 }
 
