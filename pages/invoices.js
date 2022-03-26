@@ -22,7 +22,7 @@ export default function InvoicesPage() {
         <div className={"flex"}>
             {invoices ?
                 invoices.map(invoice => (
-                    <Invoice invoice={invoice}/>
+                    <Invoice key={invoice.number} invoice={invoice}/>
                 ))
                 :
                 <h3>No invoices to display.</h3>
@@ -34,7 +34,7 @@ export default function InvoicesPage() {
 function Invoice({invoice}) {
     return (
         <div className={"flex bg-blue rounded-xl p-4 m-4 w-4/5"}>
-            <img className={"w-28 mr-4"} src={"/icons/lesson.png"}/>
+            <img className={"w-28 mr-4"} src={"/icons/lesson.png"} alt={"lesson icon"}/>
             <div className={"relative w-full"}>
                 <h1 className={"absolute top-0 right-4"}>{invoice.number}</h1>
                 <p>Amount Due: {getAmountDue(invoice.amount_due)}</p>
