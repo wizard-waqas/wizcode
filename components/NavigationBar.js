@@ -2,7 +2,7 @@
 import React, {useContext, useEffect} from "react"
 import Link from "next/link";
 import {toast} from "react-hot-toast";
-import {firestore, auth, googleAuthProvider} from "../lib/firebase";
+import {auth, googleAuthProvider} from "../lib/firebase";
 import {UserContext} from "../lib/context";
 import {Navbar, Nav, Container} from "react-bootstrap";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
@@ -11,7 +11,6 @@ export default function NavigationBar() {
     const {user} = useContext(UserContext);
 
     return (
-        //
         <>
             <Navbar className={"w-full p-6"} fixed={"top"} expand={"md"}
                     bg={"dark"} variant={"dark"}>
@@ -21,15 +20,17 @@ export default function NavigationBar() {
                     <Navbar.Collapse className={"w-full"} id={"responsive-nav-nav"}>
                         <Nav className={"w-full justify-around"}>
                             <div/>
-                            <ul className={"list-none flex text-lg"}>
-                                <Nav.Link className={"px-4 transition-all hover:border-b-2 hover:border-b-gold"} href={"/"}>
+                            <ul className={"list-none flex text-lg flex-col md:flex-row"}>
+                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}
+                                          href={"/"}>
                                     HOME
                                 </Nav.Link>
-                                <Nav.Link className={"px-4 transition-all hover:border-b-2 hover:border-b-gold"} href={"/lessons/"}>
+                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}
+                                          href={"/lessons/"}>
                                     LESSONS
                                 </Nav.Link>
-                                <Nav.Link className={"px-4 transition-all hover:border-b-2 hover:border-b-gold"}
-                                    href={"https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1"}>
+                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}
+                                          href={"https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1"}>
                                     MERCH
                                 </Nav.Link>
                             </ul>
