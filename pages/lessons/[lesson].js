@@ -1,7 +1,6 @@
 /* React JS Template using functions */
 import React, {useState, useEffect, Fragment} from "react"
 import {useRouter} from "next/router";
-import Navbar from "../../components/Navbar";
 
 export default function LessonPage() {
     const router = useRouter()

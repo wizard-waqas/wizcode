@@ -11,7 +11,6 @@ export default async function handler(req, res) {
         email: email
     }).then(customers => {
         // return the first customer from the returned data
-        console.log(customers)
         return customers.data[0]
     })
 
