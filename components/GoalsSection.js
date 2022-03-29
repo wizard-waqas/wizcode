@@ -8,10 +8,10 @@ export default function GoalsSection() {
 
                 <GoalCard
                     icon={"coding.png"}
-                    title={"Programming Fundamentals"} 
+                    title={"Coding Fundamentals"}
                     paragraph={
                         <Fragment>
-                            In programming, each concept builds atop the last. If you have a
+                            When learning how to code, know that each concept builds atop the last. If you have a
                             <span className={'text-gold'}> good understanding of the fundamentals</span>. 
                             not only will you be able to learn complex concepts easier, but you’ll also
                             <span className={'text-gold'}> work exponentially more productively</span>.
@@ -64,7 +64,7 @@ export default function GoalsSection() {
 
 function GoalCard({ icon, title, paragraph }){
     return (
-        <div className="drop-shadow-xl bg-blue p-4 my-8 rounded-2xl flex-column flex w-full items-center lg:basis-5/12">
+        <div className="drop-shadow-xl bg-blue p-4 my-8 rounded-2xl flex-column flex w-full items-center lg:basis-5/12 lg:!flex-row">
             <img className="w-24 h-24 mr-4" src={"icons/"+icon} alt={"goal icon"}/>
             <div className="">
                 <h3 className=" text-xl">{ title }</h3>
