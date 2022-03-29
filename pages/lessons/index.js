@@ -1,6 +1,5 @@
 /* React JS Template using functions */
 import React, {useState, useEffect} from "react"
-import Navbar from "../../components/Navbar";
 import Link from "next/link";
 
 import { firestore, lessonToJSON } from "../../lib/firebase";
