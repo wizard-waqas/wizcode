@@ -50,38 +50,27 @@ export default function NavigationBar() {
     )
 }
 
-function SignInButton() {
+const SignInButton = () => {
     const signInWithGoogle = async () => {
         auth.signInWithPopup(googleAuthProvider).then((data) => {
-            const user = data.user
-            localStorage.setItem("email", JSON.stringify({email: user.email}))
+            toast.success("Signed in")
         });
     }
 
-    useEffect(() => {
-        return () => {
-            toast.success("Signed in")
-        }
-    }, [])
-
     return (
-        <button className={"btn-google px-4 py-4 bg-darkgold rounded-lg"} onClick={signInWithGoogle}>
-            Sign in with Google
+        <button className={"btn-google w-40 px-2 py-2 bg-blue rounded-lg flex justify-around items-center"}
+                onClick={signInWithGoogle}>
+            <img src={"google.png"} className={"w-8"}/>
+            <span className={"font-fredoka"}>Sign in</span>
         </button>
     )
 }
 
-function SignOutButton() {
+const SignOutButton = () => {
     const signOutwithGoogle = async () => {
         await auth.signOut()
-        localStorage.removeItem("email")
+        toast.success("Successfully signed out")
     }
 
-    useEffect(() => {
-        return () => {
-            toast.success("Successfully signed out")
-        }
-    }, [])
-
-    return <button className={"px-4 py-4 bg-darkgold rounded-lg"} onClick={signOutwithGoogle}>Sign Out</button>
+    return <button className={"px-4 py-2 bg-blue rounded-lg"} onClick={signOutwithGoogle}>Sign Out</button>
 }
