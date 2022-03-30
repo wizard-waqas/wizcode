@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from "react"
 import Tilt from 'react-parallax-tilt';
 import {toast} from "react-hot-toast";
+import {Bounce} from "react-awesome-reveal";
 
 export default function SplashSection() {
     const [email, setEmail] = useState("")
@@ -10,7 +11,7 @@ export default function SplashSection() {
     useEffect(() => {
         const savedEmail = localStorage.getItem("email")
 
-        if (savedEmail){
+        if (savedEmail) {
             setEmail(savedEmail)
             setHasSubmitted(true)
         }
@@ -81,21 +82,25 @@ export default function SplashSection() {
             </div>
 
             {hasSubmitted ?
-                <div className={"text-3xl text-center mt-16"}>
-                    <span className={"font-fredoka"}>Thank you! </span>
-                    We will be in touch soon to
-                    <span className={"text-gold font-fredoka"}> schedule an appointment</span>.
-                </div>
+                <Bounce>
+                    <div className={"text-3xl text-center mt-16"}>
+                        <span className={"font-fredoka"}>Thank you! </span>
+                        We will be in touch soon to
+                        <span className={"text-gold font-fredoka"}> schedule an appointment</span>.
+
+                    </div>
+                </Bounce>
                 :
                 <div className={"mt-16"}>
-                <h3 className={"text-xl mb-4 lg:text-md"}>Sign up for a free 1-on-1 coding lesson today</h3>
-                <form className={"drop-shadow-lg"} onSubmit={handleSubmit}>
-                    <input
-                        className={"bg-white rounded-tl-lg rounded-bl-lg px-2 py-2 w-4/5 text-darkgrey text-sm md:w-1/2"}
-                        placeholder={"Email *"} onChange={handleChange}/>
-                    <input className={"w-1/5 bg-darkgold rounded-tr-lg rounded-br-lg text-sm px-2 py-2"} type={"button"}
-                           value={"Submit"} onClick={handleSubmit}/>
-                </form>
+                    <h3 className={"text-xl mb-4 lg:text-md"}>Sign up for a free 1-on-1 coding lesson today</h3>
+                    <form className={"drop-shadow-lg"} onSubmit={handleSubmit}>
+                        <input
+                            className={"bg-white rounded-tl-lg rounded-bl-lg px-2 py-2 w-4/5 text-darkgrey text-sm md:w-1/2"}
+                            placeholder={"Email *"} onChange={handleChange}/>
+                        <input className={"w-1/5 bg-darkgold rounded-tr-lg rounded-br-lg text-sm px-2 py-2"}
+                               type={"button"}
+                               value={"Submit"} onClick={handleSubmit}/>
+                    </form>
                 </div>
             }
         </div>
