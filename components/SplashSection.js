@@ -29,7 +29,7 @@ export default function SplashSection() {
             </div>
 
             <form className={"mt-16"}>
-                <h3 className={"text-xl mb-4 lg:text-md"}>Sign up for a free 1-on-1 trial today</h3>
+                <h3 className={"text-xl mb-4 lg:text-md"}>Sign up for a free 1-on-1 coding lesson today</h3>
                 <div className={"drop-shadow-lg"}>
                     <input
                         className={"bg-white rounded-tl-lg rounded-bl-lg px-2 py-2 w-4/5 text-darkgrey text-sm md:w-1/2"}
