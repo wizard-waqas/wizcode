@@ -63,7 +63,7 @@ const SignInButton = () => {
     return (
         <button className={"btn-google w-40 px-2 py-2 bg-blue rounded-lg flex justify-around items-center"}
                 onClick={signInWithGoogle}>
-            <img src={"google.png"} className={"w-8"}/>
+            <img src={"/icons/google.png"} className={"w-8"} alt={""}/>
             <span className={"font-fredoka"}>Sign in</span>
         </button>
     )
