@@ -17,7 +17,7 @@ export default function SplashSection() {
         }
     }, [])
 
-    async function fetchData() {
+    async function sendText() {
         const response = await fetch(`/api/twilio/${email}`)
     }
 
@@ -47,7 +47,7 @@ export default function SplashSection() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (isValidEmail()) {
-            await fetchData()
+            await sendText()
             toast.success("Success")
             localStorage.setItem("email", email)
             setHasSubmitted(true);
