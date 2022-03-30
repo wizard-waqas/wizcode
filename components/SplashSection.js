@@ -19,6 +19,8 @@ export default function SplashSection() {
 
     async function sendText() {
         const response = await fetch(`/api/twilio/${email}`)
+        const data = await response.json()
+        console.log(data)
     }
 
     /**

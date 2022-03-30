@@ -11,8 +11,6 @@ export default async function handler(req, res) {
             from: '+17629003136',
             to: '+17326684229'
         })
-        .then(message => console.log(message))
-        .catch(error => console.log(error));
-
-    res.status(200).json(email)
+        .then(message => res.status(200).json(message))
+        .catch(error => res.status(200).json(error));
 }
