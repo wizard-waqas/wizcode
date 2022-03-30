@@ -9,8 +9,7 @@ export default function InvoicesPage() {
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(`/api/stripe/${user.email}`)
-            const data = await response.json()
-            setInvoices(data.invoices)
+            return await response.json()
         }
 
         if (user !== null) {
