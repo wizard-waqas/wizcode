@@ -30,16 +30,24 @@ export default function InvoicesPage() {
     );
 };
 
+function getDate(dateInSeconds) {
+    const dateInMilliseconds = dateInSeconds * 1000
+    return new Date(dateInMilliseconds).toLocaleDateString("en-US")
+}
+
 function Invoice({invoice}) {
     return (
         <div className={"flex flex-col bg-blue drop-shadow-xl rounded-xl p-3 my-4 w-full"}>
             <div className={"flex"}>
                 <img className={"w-16 mr-4"} src={"/icons/lesson.png"} alt={"lesson icon"}/>
                 <div className={"relative w-full"}>
-                    <h1 className={""}>Coding lesson</h1>
-                    <h1 className={"absolute top-0 right-4"}>{invoice.number}</h1>
-                    <p>Amount Due: {getAmountDue(invoice.amount_due)}</p>
-
+                    <h1 className={"text-lg"}>Coding lesson</h1>
+                    <h1 className={"absolute top-0 right-4"}>{getDate(invoice.created)}</h1>
+                    {invoice.paid ?
+                        <></>
+                        :
+                        <p>Amount Due: {getAmountDue(invoice.amount_due)}</p>
+                    }
                 </div>
             </div>
             {invoice.paid ?
