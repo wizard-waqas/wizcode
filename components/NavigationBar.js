@@ -6,6 +6,10 @@ import {UserContext} from "../lib/context";
 import {Navbar, Nav, Container} from "react-bootstrap";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 
+/**
+ * Navigation bar shown at top of screen
+ * Contains the routes for the application
+ */
 export default function NavigationBar() {
     const {user} = useContext(UserContext);
 
@@ -14,7 +18,7 @@ export default function NavigationBar() {
             <Navbar className={"w-full p-6"} fixed={"top"} expand={"md"}
                     bg={"dark"} variant={"dark"}>
                 <Container className={"flex justify-around transition-all"}>
-                    <img className={"w-16 cursor-pointer"} src="/logo.png" alt="logo"/>
+                    <img className={"w-16 cursor-pointer drop-shadow-outline"} src="/logo.png" alt="logo"/>
                     <NavbarToggle aria-controls={"responsive-navbar-nav"}/>
                     <Navbar.Collapse className={"w-full"} id={"responsive-nav-nav"}>
                         <Nav className={"w-full justify-around"}>
@@ -53,6 +57,9 @@ export default function NavigationBar() {
     )
 }
 
+/**
+ * Shown when the user is not logged in
+ */
 const SignInButton = () => {
     const signInWithGoogle = async () => {
         auth.signInWithPopup(googleAuthProvider).then((data) => {
@@ -69,6 +76,9 @@ const SignInButton = () => {
     )
 }
 
+/**
+ * Shown when the user is logged in
+ */
 const SignOutButton = () => {
     const signOutwithGoogle = async () => {
         await auth.signOut()

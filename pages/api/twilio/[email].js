@@ -2,6 +2,10 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
+/**
+ * when a user submits their email for a trial,
+ * text their email to my number
+ */
 export default async function handler(req, res) {
     const {email} = req.query  // get user email from route
 

@@ -5,7 +5,9 @@ export default function Document() {
     return (
         <Html>
             <Head>
-                <link rel="icon" type="image/x-icon" href="/logo.png"/>
+                <link rel="manifest" href={"/manifest.json"}/>
+                <link rel={"apple-touch-icon"} href={"/icons/apple-icon-180.png"}></link>
+                <meta name="theme-color" content="#212529"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
                 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans&display=swap"

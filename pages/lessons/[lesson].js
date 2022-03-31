@@ -1,7 +1,13 @@
 /* React JS Template using functions */
-import React, {useState, useEffect, Fragment} from "react"
+import React, {useEffect, Fragment} from "react"
 import {useRouter} from "next/router";
 
+/**
+ * display desired lesson that user can interact with
+ * consists of:
+ *      coding editor (embedded replit)
+ *      project details like title, description, steps, hints, etc.
+ */
 export default function LessonPage() {
     const router = useRouter()
     const { lesson } = router.query

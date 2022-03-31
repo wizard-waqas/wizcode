@@ -1,5 +1,10 @@
 import Stripe from "stripe";
 
+/**
+ * get invoices for a user from stripe using their email
+ *
+ * can also optionally return customer from here containing stripe customer data
+ */
 export default async function handler(req, res) {
     const {email} = req.query  // get user email from route
 

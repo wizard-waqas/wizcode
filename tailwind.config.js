@@ -21,6 +21,12 @@ module.exports = {
     },
     extend: {
       dropShadow: {
+        "outline": [
+            "1px 0 0 white",
+            "0 1px 0 white",
+            "-1px 0 0 white",
+            "0 -1px 0 white"
+        ],
         "lg": '0 0 20px rgba(255, 212, 59, 0.5)',
         "xl": "-15px 15px 0 rgba(28, 34, 60, 1)",
       },
