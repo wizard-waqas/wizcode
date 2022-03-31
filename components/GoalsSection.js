@@ -1,6 +1,9 @@
 import React, {Fragment} from "react"
 import {Fade} from "react-awesome-reveal";
 
+/**
+ * section containing WizCode's goals
+ */
 export default function GoalsSection() {
     return (
         <div className={"w-full mt-16"}>
@@ -62,6 +65,10 @@ export default function GoalsSection() {
     )
 }
 
+/**
+ * A information card containing WizCode's goals.
+ * Consists of an icon, title, and descriptional paragraph
+ */
 function GoalCard({icon, title, paragraph}) {
     return (
         <Fade className={"w-full"}>

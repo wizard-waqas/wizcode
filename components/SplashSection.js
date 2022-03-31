@@ -4,10 +4,17 @@ import Tilt from 'react-parallax-tilt';
 import {toast} from "react-hot-toast";
 import {Bounce} from "react-awesome-reveal";
 
+/**
+ * The page you see on initial load containing the basic company info:
+ *      title, descriptions, coding editor art
+ */
 export default function SplashSection() {
-    const [email, setEmail] = useState("")
-    const [hasSubmitted, setHasSubmitted] = useState(false)
+    const [email, setEmail] = useState("")  // email entered in input box
+    const [hasSubmitted, setHasSubmitted] = useState(false)  // has the user already submitted their email
 
+    /**
+     * check if user already submitted email in past by checking localstorage
+     */
     useEffect(() => {
         const savedEmail = localStorage.getItem("email")
 
@@ -17,10 +24,12 @@ export default function SplashSection() {
         }
     }, [])
 
+    /**
+     * send a text to myself using twilio
+     */
     async function sendText() {
         const response = await fetch(`/api/twilio/${email}`)
         const data = await response.json()
-        console.log(data)
     }
 
     /**

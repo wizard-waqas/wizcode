@@ -4,6 +4,9 @@ import Link from "next/link";
 
 import { firestore, lessonToJSON } from "../../lib/firebase";
 
+/**
+ * before the page loads, get available lessons from firestore
+ */
 export async function getServerSideProps(){
     const lessonsQuery = firestore
         .collectionGroup("lessons")
@@ -15,6 +18,9 @@ export async function getServerSideProps(){
     }
 }
 
+/**
+ * display lessons fetched from firestore
+ */
 export default function LessonsPage(props) {
     const lessons = props.lessons;
 
@@ -30,6 +36,10 @@ export default function LessonsPage(props) {
     )
 }
 
+/**
+ * a lesson card that will link to another page where the user can interact
+ * this card is just an image, title, and description
+ */
 function LessonCard({link, img, title, description}) {
     return (
         <div className={"bg-blue rounded-2xl overflow-hidden flex-1 basis-1/5 m-4"}>
