@@ -14,7 +14,7 @@ export default function NavigationBar() {
             <Navbar className={"w-full p-6"} fixed={"top"} expand={"md"}
                     bg={"dark"} variant={"dark"}>
                 <Container className={"flex justify-around transition-all"}>
-                    <img className={"w-16 cursor-pointer"} src="/logo.png" alt="logo"/>
+                    <img className={"w-16 cursor-pointer drop-shadow-outline"} src="/logo.png" alt="logo"/>
                     <NavbarToggle aria-controls={"responsive-navbar-nav"}/>
                     <Navbar.Collapse className={"w-full"} id={"responsive-nav-nav"}>
                         <Nav className={"w-full justify-around"}>
