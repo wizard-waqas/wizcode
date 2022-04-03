@@ -6,8 +6,8 @@ export default function Document() {
         <Html>
             <Head>
                 <link rel="manifest" href={"/manifest.json"}/>
-                <link rel={"apple-touch-icon"} href={"/icons/apple-icon-180.png"}></link>
-                <link rel="shortcut icon" type="image/jpg" href="/icons/apple-icon-180.png"/>
+                <link rel={"apple-touch-icon"} href={"/icons/pwa/apple-icon-180.png"}></link>
+                <link rel="shortcut icon" type="image/jpg" href="/icons/pwa/apple-icon-180.png"/>
                 <meta name="theme-color" content="#212529"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
