@@ -73,13 +73,21 @@ const SignUpForTrial = () => {
         const regex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
         const isValid = regex.test(email);
 
-        if (isValid){
-            toast.success("Success")
-            setHasSubmitted(true);
-            localStorage.setItem("email", email)
-        } else {
+        // return false if invalid email entry
+        if (!isValid) {
             toast.error("Invalid email")
+            return false
         }
+
+        // send a text and show a toast message accordingly
+        toast.promise(sendText(), {
+            loading: "Processing",
+            success: "Success",
+            error: "Sorry, something went wrong"
+        })
+
+        setHasSubmitted(true);  // hide inputs
+        localStorage.setItem("email", email)  // save the email for future loads
 
         return isValid
     }
@@ -100,7 +108,7 @@ const SignUpForTrial = () => {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (isValidEmail()) {
-            await sendText()
+
         }
     }
 
@@ -112,7 +120,6 @@ const SignUpForTrial = () => {
                     <span className={"font-fredoka"}>Thank you! </span>
                     We will be in touch soon to
                     <span className={"text-gold font-fredoka"}> schedule an appointment</span>.
-
                 </div>
             </Bounce>
         )
