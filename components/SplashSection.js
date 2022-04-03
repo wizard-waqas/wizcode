@@ -43,6 +43,7 @@ export default function SplashSection() {
 const SignUpForTrial = () => {
     const [email, setEmail] = useState("")  // email entered in input box
     const [hasSubmitted, setHasSubmitted] = useState(false)  // has the user already submitted their email
+    const [isDisabled, setIsDisabled] = useState(false)
 
     /**
      * check if user already submitted email in past by checking localstorage
@@ -60,8 +61,16 @@ const SignUpForTrial = () => {
      * send a text to myself using twilio
      */
     async function sendText() {
-        const response = await fetch(`/api/twilio/${email}`)
-        const data = await response.json()
+        try {
+            setIsDisabled(true)
+            const response = await fetch(`/api/twilio/${email}`)
+            const data = await response.json()
+            setIsDisabled(false)
+            return data
+        } catch (e) {
+            setIsDisabled(false)
+            throw 400
+        }
     }
 
     /**
@@ -133,9 +142,10 @@ const SignUpForTrial = () => {
                 <input
                     className={"bg-white rounded-tl-lg rounded-bl-lg px-2 py-2 w-4/5 text-darkgrey text-sm md:w-1/2"}
                     placeholder={"Email *"} onChange={(e) => handleChange(e)}/>
-                <input className={"w-1/5 bg-darkgold rounded-tr-lg rounded-br-lg text-sm px-2 py-2"}
-                       type={"button"}
-                       value={"Submit"} onClick={(e) => handleSubmit(e)}/>
+                <input
+                    className={"w-1/5 rounded-tr-lg rounded-br-lg text-sm px-2 py-2 touch-manipulation " + (!isDisabled ? "bg-darkgold" : "bg-gold")}
+                    type={"button"} disabled={isDisabled}
+                    value={"Submit"} onClick={(e) => handleSubmit(e)}/>
             </form>
         </div>
     )
