@@ -7,5 +7,5 @@ import React from "react"
  * @param show - boolean dictating whether or not to show the loader
  */
 export default function Loader({ show }) {
-    return show ? <div className={"loader"}></div> : null;
+    return show ? <div className={"loader w-14 h-14 rounded-full"}></div> : null;
 }
