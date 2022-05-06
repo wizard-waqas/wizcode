@@ -6,6 +6,10 @@ import {UserContext} from "../lib/context";
 import {Navbar, Nav, Container} from "react-bootstrap";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 import Link from "next/link";
+import { AiFillHome } from "react-icons/ai";
+import { RiTShirtFill } from "react-icons/ri"
+import {FaFileInvoice} from "react-icons/fa";
+
 
 /**
  * Navigation bar shown at top of screen
@@ -29,21 +33,17 @@ export default function NavigationBar() {
                         <Nav className={"w-full justify-around"}>
                             <div/>
                             <ul className={"list-none flex text-lg flex-col md:flex-row"}>
-                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}
+                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
                                           href={"/"}>
-                                    HOME
+                                    <AiFillHome className={"mr-2"}/> HOME
                                 </Nav.Link>
-                                {/*<Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}*/}
-                                {/*          href={"/lessons/"}>*/}
-                                {/*    LESSONS*/}
-                                {/*</Nav.Link>*/}
-                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}
+                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
                                           href={"https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1"}>
-                                    MERCH
+                                    <RiTShirtFill className={"mr-2"}/>MERCH
                                 </Nav.Link>
-                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold"}
+                                <Nav.Link className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
                                           href={"/invoices/"}>
-                                    INVOICES
+                                    <FaFileInvoice className={"mr-2"}/>INVOICES
                                 </Nav.Link>
                             </ul>
 
