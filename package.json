@@ -21,12 +21,13 @@
     "react-dom": "17.0.2",
     "react-firebase-hooks": "^3.0.4",
     "react-hot-toast": "^2.2.0",
+    "react-icons": "^4.3.1",
     "react-parallax-tilt": "^1.6.4",
     "stripe": "^8.209.0",
     "twilio": "^3.76.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
+    "autoprefixer": "^10.4.4",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
     "postcss": "^8.4.8",
