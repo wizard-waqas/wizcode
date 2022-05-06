@@ -24,8 +24,8 @@ export default function SplashSection() {
                         <span className={"font-fredoka text-gold"}> how to code</span>.
                     </h2>
 
-                    <h4>
-                        DESCRIPTION GOES HERE
+                    <h4 className={"text-grey mt-4"}>
+                        For people looking to gain or solidify their skills in programming
                     </h4>
                 </div>
 
