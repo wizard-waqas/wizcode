@@ -2,7 +2,7 @@
 import React, {useContext, useEffect, useState} from "react"
 import {UserContext} from "../lib/context";
 import Link from "next/link";
-import Loader from "../components/Loader";
+import Loader from "../components/homepage/Loader";
 
 /**
  * display the invoices for a user from stripe
@@ -72,7 +72,7 @@ function Invoice({invoice}) {
     return (
         <div className={"flex flex-col bg-blue drop-shadow-xl rounded-xl p-3 my-4 w-full"}>
             <div className={"flex"}>
-                <img className={"w-16 mr-4"} src={"/icons/lesson.png"} alt={"lesson icon"}/>
+                <img className={"w-16 mr-4"} src={"/img/lessons/lesson.png"} alt={"lesson icon"}/>
                 <div className={"relative flex flex-column w-full"}>
                     <h1 className={"text-lg"}>Coding lesson</h1>
                     <h1 className={"sm:absolute sm:top-0 sm:right-4"}>{getDate(invoice.created)}</h1>
