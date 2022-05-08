@@ -12,7 +12,7 @@ export default function Privacy() {
             <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the
                 collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been
                 created with the help of the <a href="https://www.termsfeed.com/privacy-policy-generator/"
-                                                target="_blank">Privacy Policy Generator</a>.</p>
+                                                target="_blank" rel={"noreferrer"}>Privacy Policy Generator</a>.</p>
 
             <h1 className={"text-2xl mt-8"}>Interpretation and Definitions</h1>
             <h2 className={"text-lg mt-4"}>Interpretation</h2>
@@ -121,10 +121,12 @@ export default function Privacy() {
                     Flash Cookies) to collect and store information about Your preferences or Your activity on our
                     Service. Flash Cookies are not managed by the same browser settings as those used for Browser
                     Cookies. For more information on how You can delete Flash Cookies, please read &quot;Where can I
-                    change the settings for disabling, or deleting local shared objects?&quot; available at <a
+                    change the settings for disabling, or deleting local shared objects?&quot; available at
+                    <a
                         href="https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_"
-                        rel="external nofollow noopener"
-                        target="_blank">https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_</a>
+                        rel="external nofollow noopener noreferrer"
+                        target="_blank">https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_
+                    </a>
                 </li>
                 <li><strong>Web Beacons.</strong> Certain sections of our Service and our emails may contain small
                     electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel
@@ -135,8 +137,8 @@ export default function Privacy() {
             </ul>
             <p>Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on Your
                 personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You
-                close Your web browser. You can learn more about cookies here: <a
-                    href="https://www.termsfeed.com/blog/cookies/" target="_blank">All About Cookies by TermsFeed</a>.
+                close Your web browser. You can learn more about cookies here:
+                <a href="https://www.termsfeed.com/blog/cookies/" target="_blank" rel={"noreferrer"}>All About Cookies by TermsFeed</a>.
             </p>
             <p>We use both Session and Persistent Cookies for the purposes set out below:</p>
             <ul className={"ml-8 list-disc"}>
