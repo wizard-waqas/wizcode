@@ -66,8 +66,8 @@ export default function GoalsSection() {
 }
 
 /**
- * A information card containing WizCode's goals.
- * Consists of an icon, title, and descriptional paragraph
+ * information card containing WizCode's goals.
+ * Consists of an icon, title, and description paragraph
  */
 function GoalCard({icon, title, paragraph}) {
     return (
