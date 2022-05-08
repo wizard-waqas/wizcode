@@ -24,13 +24,13 @@ export default function SplashSection() {
                         <span className={"font-fredoka text-gold"}> how to code</span>.
                     </h2>
 
-                    <h4>
-                        DESCRIPTION GOES HERE
+                    <h4 className={"text-grey mt-4"}>
+                        For people looking to gain or solidify their skills in programming
                     </h4>
                 </div>
 
                 <Tilt className={"w-1/2 self-center mt-20"}>
-                    <img className={"m-4 drop-shadow-lg rounded-lg"} data-tilt src={"editorart.png"}
+                    <img className={"m-4 drop-shadow-lg rounded-lg"} data-tilt src={"/img/editorart.png"}
                          alt={"coding editor art"}/>
                 </Tilt>
             </div>

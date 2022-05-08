@@ -1,6 +1,8 @@
 /* React JS Template using functions */
 import React, {useContext, useEffect, useState} from "react"
 import {UserContext} from "../lib/context";
+import Link from "next/link";
+import Loader from "../components/homepage/Loader";
 
 /**
  * display the invoices for a user from stripe
@@ -8,6 +10,7 @@ import {UserContext} from "../lib/context";
 export default function InvoicesPage() {
     const {user} = useContext(UserContext);
     const [invoices, setInvoices] = useState([])
+    const [loading, setLoading] = useState(false);
 
     /**
      * when the page loads fetch the invoices from stripe api
@@ -20,9 +23,27 @@ export default function InvoicesPage() {
 
         // only fetch data if there is a user logged in
         if (user !== null) {
+            setLoading(true)
             fetchData().then(data => setInvoices(data.invoices))
+            setLoading(false)
         }
     }, [user])
+
+    if (loading) {
+        return (
+            <div className={"flex justify-center items-center mt-80"}>
+                <Loader show={loading}/>
+            </div>
+        )
+    }
+
+    if (!user) {
+        return (
+            <div className={"flex justify-center items-center mt-80"}>
+                <h3 className={"text-2xl text-center"}>You must be logged in to view your invoices.</h3>
+            </div>
+        )
+    }
 
     return (
         <div className={"flex flex-col"}>
@@ -31,7 +52,9 @@ export default function InvoicesPage() {
                     <Invoice key={invoice.number} invoice={invoice}/>
                 ))
                 :
-                <h3>No invoices to display.</h3>
+                <div className={"flex justify-center items-center mt-80"}>
+                    <h3 className={"text-2xl text-center"}>No invoices to display.</h3>
+                </div>
             }
         </div>
     );
@@ -51,10 +74,10 @@ function Invoice({invoice}) {
     return (
         <div className={"flex flex-col bg-blue drop-shadow-xl rounded-xl p-3 my-4 w-full"}>
             <div className={"flex"}>
-                <img className={"w-16 mr-4"} src={"/icons/lesson.png"} alt={"lesson icon"}/>
-                <div className={"relative w-full"}>
+                <img className={"w-16 mr-4"} src={"/img/lessons/lesson.png"} alt={"lesson icon"}/>
+                <div className={"relative flex flex-column w-full"}>
                     <h1 className={"text-lg"}>Coding lesson</h1>
-                    <h1 className={"absolute top-0 right-4"}>{getDate(invoice.created)}</h1>
+                    <h1 className={"sm:absolute sm:top-0 sm:right-4"}>{getDate(invoice.created)}</h1>
                     {invoice.paid ?
                         <></>
                         :
@@ -63,14 +86,15 @@ function Invoice({invoice}) {
                 </div>
             </div>
             {invoice.paid ?
-                <a className={"bg-darkblue p-2 rounded-lg bottom-0 right-4 text-center"}>Paid</a>
+                <div className={"bg-darkblue p-2 rounded-lg bottom-0 right-4 text-center"}>Paid</div>
                 :
-                <a className={"bg-darkgold p-2 rounded-lg bottom-0 right-4 text-center"}
-                   href={invoice.hosted_invoice_url}>Pay Now</a>
+                <Link href={invoice.hosted_invoice_url || "#"}>
+                    <a className={"bg-darkgold p-2 rounded-lg bottom-0 right-4 text-center"}>Pay Now</a>
+                </Link>
             }
         </div>
-
     )
+
 }
 
 // convert a float amount due into currency format

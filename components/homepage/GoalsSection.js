@@ -66,16 +66,16 @@ export default function GoalsSection() {
 }
 
 /**
- * A information card containing WizCode's goals.
- * Consists of an icon, title, and descriptional paragraph
+ * information card containing WizCode's goals.
+ * Consists of an icon, title, and description paragraph
  */
 function GoalCard({icon, title, paragraph}) {
     return (
         <Fade className={"w-full"}>
             <div className="drop-shadow-xl bg-blue p-4 my-3 rounded-2xl flex-column flex transition-all w-full items-center lg:!my-8 lg:!flex-row">
-                <img className="w-24 h-24 mr-4" src={"/icons/" + icon} alt={"goal icon"}/>
-                <div className="">
-                    <h3 className=" text-xl">{title}</h3>
+                <img className="w-24 h-24 mr-4" src={"/img/homepage/goals/" + icon} alt={"goal icon"}/>
+                <div>
+                    <h3 className="text-xl">{title}</h3>
                     <p className="text-md text-lightgrey">
                         {paragraph}
                     </p>

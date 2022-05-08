@@ -19,6 +19,10 @@ export default async function handler(req, res) {
         return customers.data[0]
     })
 
+    if (!customer){
+        return res.status(200).json({})
+    }
+
     const invoices = await stripe.invoices.list({
         customer: customer.id,
         limit: 3,
