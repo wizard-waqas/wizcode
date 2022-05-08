@@ -4,8 +4,8 @@ import React, {useState, useEffect} from "react"
 export default function TermsOfService() {
     return (
         <div>
-            <h1 className={"text-2xl mt-8"} className={"text-4xl"}>Terms and Conditions</h1>
-            <p>Last updated: July 01, 2021</p>
+            <h1 className={"text-4xl"}>Terms and Conditions</h1>
+            <p>Last updated: May 8, 2022</p>
             <p>Please read these terms and conditions carefully before using Our Service.</p>
             <h1 className={"text-2xl mt-8"}>Interpretation and Definitions</h1>
             <h2 className={"text-lg mt-4"}>Interpretation</h2>

@@ -40,7 +40,7 @@ export default function InvoicesPage() {
     if (!user) {
         return (
             <div className={"flex justify-center items-center mt-80"}>
-                <h1 className={"text-2xl text-center"}>You must be logged in to view your invoices</h1>
+                <h3 className={"text-2xl text-center"}>You must be logged in to view your invoices.</h3>
             </div>
         )
     }
@@ -52,7 +52,9 @@ export default function InvoicesPage() {
                     <Invoice key={invoice.number} invoice={invoice}/>
                 ))
                 :
-                <h3>No invoices to display.</h3>
+                <div className={"flex justify-center items-center mt-80"}>
+                    <h3 className={"text-2xl text-center"}>No invoices to display.</h3>
+                </div>
             }
         </div>
     );
