@@ -12,14 +12,18 @@ export default async function handler(req, res) {
         apiVersion: "2020-08-27",
     })
 
-    const customer = await stripe.customers.list({
+    let customer = await stripe.customers.list({
         email: email
     }).then(customers => {
         // return the first customer from the returned data
         return customers.data[0]
     })
 
-    if (!customer){
+    // if no customer exists, create one and return an empty response
+    if (!customer) {
+        customer = await stripe.customers.create({
+            email: email
+        });
         return res.status(200).json({})
     }
 
