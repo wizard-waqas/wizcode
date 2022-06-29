@@ -1,7 +1,7 @@
-This is WizCode, on this platform you can do XYZ
+# WizCode.co
+Our goal is to teach you **how to teach yourself** how to code
 
-This app can be installable as a PWA! Heres how:
-Mobile:
+On this site you can gain information about our purpose and pay for your lessons
 
-Desktop:
-
+### Coming soon
+ - homework tab
