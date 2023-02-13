@@ -10,7 +10,7 @@ import Loader from "../components/homepage/Loader";
 export default function InvoicesPage() {
     const {user} = useContext(UserContext);
     const [invoices, setInvoices] = useState([])
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     /**
      * when the page loads fetch the invoices from stripe api
