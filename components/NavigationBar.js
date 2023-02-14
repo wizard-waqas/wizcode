@@ -1,9 +1,9 @@
 /* React JS Template using functions */
 import React, {useContext, useEffect} from "react"
 import {toast} from "react-hot-toast";
-import {auth, googleAuthProvider} from "../lib/firebase";
+import {auth, googleAuthProvider, yahooAuthProvider, signInWithProvider} from "../lib/firebase";
 import {UserContext} from "../lib/context";
-import {Navbar, Nav, Container} from "react-bootstrap";
+import {Navbar, Nav, Container, NavDropdown} from "react-bootstrap";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 import Link from "next/link";
 import {AiFillHome} from "react-icons/ai";
@@ -61,7 +61,7 @@ export default function NavigationBar() {
                             {user ?
                                 <SignOutButton/>
                                 :
-                                <SignInButton/>
+                                <SignInOptions/>
                             }
                         </Nav>
                     </Navbar.Collapse>
@@ -72,20 +72,44 @@ export default function NavigationBar() {
 }
 
 /**
- * Shown when the user is not logged in
+ * show different sign in options using our providers
+ * - google
+ * - yahoo
  */
-const SignInButton = () => {
-    const signInWithGoogle = async () => {
-        auth.signInWithPopup(googleAuthProvider).then((data) => {
-            toast.success("Signed in")
-        });
-    }
+const SignInOptions = () => {
 
     return (
-        <button className={"btn-google w-40 px-2 py-2 bg-blue rounded-lg flex justify-around items-center"}
-                onClick={signInWithGoogle}>
+        <NavDropdown className={"btn-google w-32 bg-blue rounded-lg flex justify-around items-center"}
+                     title="Sign In" id="collapsible-nav-dropdown" menuVariant={"dark"}>
+            <NavDropdown.Item><SignInWithGoogle/></NavDropdown.Item>
+            <NavDropdown.Item><SignInWithYahoo/></NavDropdown.Item>
+        </NavDropdown>
+    )
+}
+
+/**
+ * button to sign in with google
+ */
+const SignInWithGoogle = () => {
+    return (
+        <button className={"btn-google w-40 px-2 py-2 bg-white rounded-lg flex justify-around items-center"}
+                onClick={() => {signInWithProvider(googleAuthProvider)}}>
             <img src={"/img/navbar/google.png"} className={"w-8"} alt={"google logo"}/>
-            <span className={"font-fredoka"}>Sign in</span>
+            <span className={"font-fredoka text-black text-xl"}>Sign in</span>
+        </button>
+    )
+}
+
+/**
+ * button to sign in with yahoo
+ */
+const SignInWithYahoo = () => {
+
+    return (
+        <button className={"btn-google w-40 px-2 py-2 bg-purple rounded-lg flex justify-around items-center"}
+                onClick={() => {signInWithProvider(yahooAuthProvider)}}>
+            <img src={"/img/navbar/yahoo.png"} className={"w-8"} alt={"yahoo logo"}/>
+            <span className={"font-fredoka text-xl"}>Sign in</span>
         </button>
     )
 }

@@ -23,6 +23,7 @@ module.exports = {
                 "gold": "#FFD43B",
                 "darkgold": "#D0AE33",
                 "darkblue": "#1C223C",
+                "purple": "#6000D3",
                 "darkgrey": "#161515",
                 "grey-100": "#D8E0FF",
                 "grey-200": "#CCCCCC",
