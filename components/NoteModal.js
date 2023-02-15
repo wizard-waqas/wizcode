@@ -26,21 +26,19 @@ export default function NoteModal({note, setModalOn}) {
                         <h4 className={"text-gold text-3xl mt-4"}>What I Learned</h4>
                         <ul className={"list-disc [&>*]:ml-12 [&>*]:my-1"}>
                             {note.topicsLearned.map((item) => (
-                                <li><p>{item}</p></li>
+                                <li key={item}><p>{item}</p></li>
                             ))}
                         </ul>
 
                         <h4 className={"text-gold text-3xl"}>Homework</h4>
                         <ul className={"list-disc [&>*]:ml-8 [&>*]:my-2"}>
-                            {note.homework.map((item) => {
-                                console.log(item)
-                                return (
-                                    <li className={"flex items-center"}>
+                            {note.homework.map((item) => (
+                                    <li key={item.task} className={"flex items-center"}>
                                         <button className={"w-6 h-6 mr-4 bg-grey-100 rounded-md"}></button>
                                         <p>{item.task}</p>
                                     </li>
                                 )
-                            })}
+                            )}
                         </ul>
                     </div>
                 </div>

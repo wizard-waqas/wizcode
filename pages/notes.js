@@ -32,7 +32,7 @@ export default function NotesPage() {
     return (
         <div className={"flex flex-wrap"}>
             {notes && notes.map((note) => (
-                <ViewNoteCard note={note}/>
+                <ViewNoteCard note={note} key={note.title}/>
             ))}
         </div>
     )
@@ -46,7 +46,7 @@ const ViewNoteCard = ({note}) => {
             <div className={"flex flex-col items-center bg-blue m-3 p-2 rounded-xl"}>
                 <h2 className={""}>{note.title}</h2>
                 <p className={""}>{note.date}</p>
-                <img className={"my-2 w-32"} src={"/img/notes/online-lesson.png"}/>
+                <img alt={"online lesson image"} className={"my-2 w-32"} src={"/img/notes/online-lesson.png"}/>
                 <button onClick={(q) => {
                     console.log(note)
                     setModalOn(true)
