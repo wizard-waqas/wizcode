@@ -12,7 +12,9 @@ export default function NotesPage() {
             try {
                 let doc = await firestore.collection(`users/${user.email}/notes`).get();
                 const notes = doc.docs.map((doc) => doc.data());
-                console.log(notes)
+                notes.sort((a, b) => (
+                    new Date(b.date) - new Date(a.date)
+                ))
                 return notes
             } catch (e) {
                 console.log(e)
@@ -30,7 +32,7 @@ export default function NotesPage() {
     }
 
     return (
-        <div className={"flex flex-wrap"}>
+        <div className={"flex flex-wrap justify-around w-full md:justify-start md:[&>*]:mx-4"}>
             {notes && notes.map((note) => (
                 <ViewNoteCard note={note} key={note.title}/>
             ))}
@@ -43,7 +45,7 @@ const ViewNoteCard = ({note}) => {
 
     return (
         <>
-            <div className={"flex flex-col items-center bg-blue m-3 p-2 rounded-xl"}>
+            <div className={"flex flex-col w-fit items-center bg-blue p-2 rounded-xl my-2"}>
                 <h2 className={""}>{note.title}</h2>
                 <p className={""}>{note.date}</p>
                 <img alt={"online lesson image"} className={"my-2 w-32"} src={"/img/notes/online-lesson.png"}/>
