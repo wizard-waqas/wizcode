@@ -5,11 +5,13 @@ import FooterSection from "../components/homepage/FooterSection";
 
 export default function Home() {
     return (
-        <div>
-            <SplashSection/>
-            <GoalsSection/>
-            <AboutMeSection/>
-            <FooterSection/>
+        <div className={"flex justify-center w-full"}>
+            <div className={"flex flex-col items-center w-4/5"}>
+                <SplashSection/>
+                <GoalsSection/>
+                <AboutMeSection/>
+                <FooterSection/>
+            </div>
         </div>
     )
 }

@@ -80,7 +80,7 @@ export default function NavigationBar() {
 const SignInOptions = () => {
 
     return (
-        <NavDropdown className={"btn-google w-32 bg-blue rounded-lg flex justify-around items-center"}
+        <NavDropdown className={"btn-google w-48 bg-blue rounded-lg flex flex-col justify-around items-center"}
                      title="Sign In" id="collapsible-nav-dropdown" menuVariant={"dark"}>
             <NavDropdown.Item><SignInWithGoogle/></NavDropdown.Item>
             <NavDropdown.Item><SignInWithYahoo/></NavDropdown.Item>
