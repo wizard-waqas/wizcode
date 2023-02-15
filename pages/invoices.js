@@ -17,16 +17,20 @@ export default function InvoicesPage() {
      */
     useEffect(() => {
         async function fetchData() {
-            setLoading(true)
-            const response = await fetch(`/api/stripe/${user.email}`)
-            setLoading(false)
-            return await response.json()
+            try {
+                setLoading(true)
+                const response = await fetch(`/api/stripe/${user.email}`)
+                setLoading(false)
+                return await response.json()
+            } catch (e) {
+                console.log(e)
+                return []
+            }
         }
 
         // only fetch data if there is a user logged in
         if (user !== null) {
             fetchData().then(data => setInvoices(data.invoices))
-
         }
     }, [user])
 
