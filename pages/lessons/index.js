@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from "react"
 import Link from "next/link";
 
-import { firestore, lessonToJSON } from "../../lib/firebase";
+import { firestore, dataToJSON } from "../../lib/firebase";
 
 /**
  * before the page loads, get available lessons from firestore
@@ -11,7 +11,7 @@ export async function getServerSideProps(){
     const lessonsQuery = firestore
         .collectionGroup("lessons")
 
-    const lessons = (await lessonsQuery.get()).docs.map(lessonToJSON)
+    const lessons = (await lessonsQuery.get()).docs.map(dataToJSON)
 
     return {
         props: { lessons }

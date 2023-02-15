@@ -10,7 +10,7 @@ import Loader from "../components/homepage/Loader";
 export default function InvoicesPage() {
     const {user} = useContext(UserContext);
     const [invoices, setInvoices] = useState([])
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     /**
      * when the page loads fetch the invoices from stripe api
@@ -47,7 +47,7 @@ export default function InvoicesPage() {
     }
 
     return (
-        <div className={"flex flex-col"}>
+        <div className={"flex flex-col items-center"}>
             {invoices ?
                 invoices.map(invoice => (
                     <Invoice key={invoice.number} invoice={invoice}/>
@@ -73,7 +73,7 @@ function getDate(dateInSeconds) {
  */
 function Invoice({invoice}) {
     return (
-        <div className={"flex flex-col bg-blue drop-shadow-xl rounded-xl p-3 my-4 w-full"}>
+        <div className={"flex flex-col bg-blue drop-shadow-xl rounded-xl p-3 my-4 w-full lg:w-1/2 transition-all"}>
             <div className={"flex"}>
                 <img className={"w-16 mr-4"} src={"/img/lessons/lesson.png"} alt={"lesson icon"}/>
                 <div className={"relative flex flex-column w-full"}>
