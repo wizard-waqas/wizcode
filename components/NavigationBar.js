@@ -67,6 +67,7 @@ export default function NavigationBar() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+
         </>
     )
 }
@@ -93,7 +94,9 @@ const SignInOptions = () => {
 const SignInWithGoogle = () => {
     return (
         <button className={"btn-google w-40 px-2 py-2 bg-white rounded-lg flex justify-around items-center"}
-                onClick={() => {signInWithProvider(googleAuthProvider)}}>
+                onClick={() => {
+                    signInWithProvider(googleAuthProvider)
+                }}>
             <img src={"/img/navbar/google.png"} className={"w-8"} alt={"google logo"}/>
             <span className={"font-fredoka text-black text-xl"}>Sign in</span>
         </button>
@@ -107,7 +110,9 @@ const SignInWithYahoo = () => {
 
     return (
         <button className={"btn-google w-40 px-2 py-2 bg-purple rounded-lg flex justify-around items-center"}
-                onClick={() => {signInWithProvider(yahooAuthProvider)}}>
+                onClick={() => {
+                    signInWithProvider(yahooAuthProvider)
+                }}>
             <img src={"/img/navbar/yahoo.png"} className={"w-8"} alt={"yahoo logo"}/>
             <span className={"font-fredoka text-xl"}>Sign in</span>
         </button>
