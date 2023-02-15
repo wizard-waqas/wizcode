@@ -9,7 +9,7 @@ export default function AboutMeSection() {
             <Bounce>
                 <div
                     className="drop-shadow-xl bg-blue p-4 my-3 rounded-2xl flex-column flex w-full items-center lg:!my-8 lg:!flex-row">
-                    <img src={"/img/waqas.jpg"} className={"w-40 rounded-full mr-4"}/>
+                    <img alt={"pic of me"} src={"/img/waqas.jpg"} className={"w-40 rounded-full mr-4"}/>
                     <div className={""}>
                         <h3 className={"text-xl"}>About Waqas - Founder and Teacher at WizCode</h3>
                         <p className={"text-md"}>
