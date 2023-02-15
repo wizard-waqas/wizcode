@@ -22,7 +22,7 @@ module.exports = {
                 "blue": "#3B66FF",
                 "gold": "#FFD43B",
                 "darkgold": "#D0AE33",
-                "darkblue": "#1C223C",
+                "darkblue": "#1438B8",
                 "purple": "#6000D3",
                 "darkgrey": "#161515",
                 "grey-100": "#D8E0FF",

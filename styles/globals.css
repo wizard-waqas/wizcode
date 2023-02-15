@@ -20,7 +20,6 @@ p, span, input{
 body{
   box-sizing: border-box;
   background-color: var(--darkgrey);
-  margin: 0 10%;
   padding-top: 120px;
 }
 
@@ -28,7 +27,7 @@ body{
   --blue: #3B66FF;
   --gold: #FFD43B;
   --darkgold: #D0AE33;
-  --darkblue: #1C223C;
+  --darkblue: #1438B8;
   --darkgrey: #161515;
   --lightgrey: #D8E0FF;
 }
