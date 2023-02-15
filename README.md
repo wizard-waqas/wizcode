@@ -5,6 +5,7 @@ On this site you can gain information about our purpose and pay for your lessons
 
 RECENT UPDATE:
 - view your notes from previous lessons
+- sign in with yahoo
 
 ### Coming soon
  - Scheduler
