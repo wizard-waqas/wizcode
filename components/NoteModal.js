@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import {RiCloseCircleLine} from "react-icons/ri";
 
 export default function NoteModal({note, setModalOn}) {
+    console.log(note)
 
     const handleCloseClick = () => {
         setModalOn(false)
@@ -19,23 +20,23 @@ export default function NoteModal({note, setModalOn}) {
                     <div className="text-lg font-bold text-gray-800 mb-4 w-full">
                         <h3 className={"text-gold text-4xl"}>{note.title}</h3>
                         <h5 className={"text-grey-300 text-2xl"}>{note.date}</h5>
-                        <iframe className="w-full h-96 my-4" src={`${note.replitLink}?lite=true`}/>
+                        {note.replitLink ?
+                            <iframe className="w-full h-96 my-4" src={`${note.replitLink}?lite=true`}/> : null}
 
-                        <h4 className={"text-gold text-3xl"}>What I Learned</h4>
+                        <h4 className={"text-gold text-3xl mt-4"}>What I Learned</h4>
                         <ul className={"list-disc [&>*]:ml-12 [&>*]:my-1"}>
-                            {note.topicsLearned.map((item) => {
-                                return (
-                                    <li><p>{item}</p></li>
-                                )
-                            })}
+                            {note.topicsLearned.map((item) => (
+                                <li><p>{item}</p></li>
+                            ))}
                         </ul>
 
                         <h4 className={"text-gold text-3xl"}>Homework</h4>
                         <ul className={"list-disc [&>*]:ml-8 [&>*]:my-2"}>
                             {note.homework.map((item) => {
+                                console.log(item)
                                 return (
                                     <li className={"flex items-center"}>
-                                        <button className={"w-6 h-6 mr-4 border-2 bg-grey-100 rounded-md"}></button>
+                                        <button className={"w-6 h-6 mr-4 bg-grey-100 rounded-md"}></button>
                                         <p>{item.task}</p>
                                     </li>
                                 )
