@@ -12,6 +12,7 @@ import {
 
 export default function AdminPage() {
     const {user} = useContext(UserContext);
+    const [studentEmail, setStudentEmail] = useState("")
     const [title, setTitle] = useState('');
     const [date, setDate] = useState(getLongDate());
     const [replitLink, setReplitLink] = useState('');
@@ -29,6 +30,10 @@ export default function AdminPage() {
     if (user.email !== 'waqaspathan00@gmail.com') {
         return <div>You must be admin to view this page</div>
     }
+
+    const handleStudentEmailChange = (event) => {
+        setStudentEmail(event.target.value);
+    };
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -90,8 +95,8 @@ export default function AdminPage() {
         <div className={"flex justify-center mt-12 w-full"}>
             <div className={"flex flex-col md:w-1/3 w-11/12 [&>*]:my-1"}>
                 <h1 className={"text-center text-3xl text-gold"}>Create Lesson Notes</h1>
-                <IconInputBox icon={MdOutlinePersonOutline} placeholder={"Enter student email"} state={title}
-                              setState={handleTitleChange}/>
+                <IconInputBox icon={MdOutlinePersonOutline} placeholder={"Enter student email"} state={studentEmail}
+                              setState={handleStudentEmailChange}/>
                 <IconInputBox icon={MdTitle} placeholder={"Add title of lesson"} state={title}
                               setState={handleTitleChange}/>
                 <IconInputBox icon={MdDateRange} placeholder={"Select lesson date"} state={date}
