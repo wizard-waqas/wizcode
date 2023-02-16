@@ -75,7 +75,7 @@ export default function AdminPage() {
             homework: homeworkMap
         };
 
-        // save note to firestore at users/user.email/notes/noteID
+        const toastID = toast.loading('Saving note...');
         const notesRef = firestore.collection(`users/${user.email}/notes`);
         notesRef.doc(noteID).set(note).then(() => {
             toast.success('Note added successfully')
@@ -83,6 +83,7 @@ export default function AdminPage() {
             toast.error("Something went wrong saving the note")
             console.error('Error adding note: ', error);
         });
+        toast.dismiss(toastID);
 
         // reset state
         setTitle('');
