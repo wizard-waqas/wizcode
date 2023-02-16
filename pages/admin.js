@@ -9,6 +9,7 @@ import {
     MdOutlineLink,
     MdOutlinePersonOutline
 } from "react-icons/md";
+import {toast} from "react-hot-toast";
 
 export default function AdminPage() {
     const {user} = useContext(UserContext);
@@ -77,8 +78,9 @@ export default function AdminPage() {
         // save note to firestore at users/user.email/notes/noteID
         const notesRef = firestore.collection(`users/${user.email}/notes`);
         notesRef.doc(noteID).set(note).then(() => {
-            console.log('Note added successfully!');
+            toast.success('Note added successfully')
         }).catch((error) => {
+            toast.error("Something went wrong saving the note")
             console.error('Error adding note: ', error);
         });
 
@@ -95,14 +97,14 @@ export default function AdminPage() {
         <div className={"flex justify-center mt-12 w-full"}>
             <div className={"flex flex-col md:w-1/3 w-11/12 [&>*]:my-1"}>
                 <h1 className={"text-center text-3xl text-gold"}>Create Lesson Notes</h1>
-                <IconInputBox icon={MdOutlinePersonOutline} placeholder={"Enter student email"} state={studentEmail}
-                              setState={handleStudentEmailChange}/>
-                <IconInputBox icon={MdTitle} placeholder={"Add title of lesson"} state={title}
-                              setState={handleTitleChange}/>
-                <IconInputBox icon={MdDateRange} placeholder={"Select lesson date"} state={date}
-                              setState={handleDateChange}/>
-                <IconInputBox icon={MdOutlineLink} placeholder={"Include replit link (optional)"} state={replitLink}
-                              setState={handleReplitLinkChange}/>
+                <IconInputBox icon={MdOutlinePersonOutline} placeholder={"Enter student email"}
+                              state={studentEmail} setState={handleStudentEmailChange}/>
+                <IconInputBox icon={MdTitle} placeholder={"Add title of lesson"}
+                              state={title} setState={handleTitleChange}/>
+                <IconInputBox icon={MdDateRange} placeholder={"Select lesson date"}
+                              state={date} setState={handleDateChange}/>
+                <IconInputBox icon={MdOutlineLink} placeholder={"Include replit link (optional)"}
+                              state={replitLink} setState={handleReplitLinkChange}/>
                 <IconInputBox icon={MdLightbulbOutline} placeholder={"Enter topics covered in this lesson"}
                               state={topicsLearned} setState={handleTopicsLearnedChange}/>
                 <IconInputBox icon={MdOutlineAssignment} placeholder={"Add homework assignments for this lesson"}
