@@ -10,7 +10,6 @@ export default function NotesPage() {
 
     useEffect(() => {
         async function fetchData() {
-            const toastID = toast.loading('Saving note...');
             try {
                 let doc = await firestore.collection(`users/${user.email}/notes`).get();
                 const notes = doc.docs.map((doc) => doc.data());
@@ -28,7 +27,8 @@ export default function NotesPage() {
 
         // only fetch data if there is a user logged in
         if (user !== null) {
-            fetchData().then(data => setNotes(data))
+            const toastID = toast.loading('Saving note...');
+            fetchData().then(data => {setNotes(data)}).finally(() => toast.dismiss(toastID))
         }
     }, [user])
 
