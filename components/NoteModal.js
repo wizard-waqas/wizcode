@@ -20,8 +20,8 @@ export default function NoteModal({note, setModalOn}) {
                     <div className="text-lg font-bold text-gray-800 mb-4 w-full">
                         <h3 className={"text-gold text-4xl"}>{note.title}</h3>
                         <h5 className={"text-grey-300 text-2xl"}>{note.date}</h5>
-                        {note.replitLink ?
-                            <iframe className="w-full h-96 my-4" src={`${note.replitLink}?embed=true`}/> : null}
+                        {note.codeLink ?
+                            <iframe className="w-full h-96 my-4" src={`${note.codeLink}`}/> : null}
 
                         <h4 className={"text-gold text-3xl mt-4"}>What I Learned</h4>
                         <ul className={"list-disc [&>*]:ml-12 [&>*]:my-1"}>
@@ -34,7 +34,6 @@ export default function NoteModal({note, setModalOn}) {
                         <ul className={"list-disc [&>*]:ml-8 [&>*]:my-2"}>
                             {note.homework.map((item) => (
                                     <li key={item.task} className={"flex items-center"}>
-                                        <button className={"w-6 h-6 mr-4 bg-grey-100 rounded-md"}></button>
                                         <p>{item.task}</p>
                                     </li>
                                 )
