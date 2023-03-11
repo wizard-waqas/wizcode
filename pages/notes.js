@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react"
 import NoteModal from "../components/NoteModal";
 import {UserContext} from "../lib/context";
 import {firestore} from "../lib/firebase";
+import {toast} from "react-hot-toast";
 
 export default function NotesPage() {
     const {user} = useContext(UserContext);
@@ -15,15 +16,19 @@ export default function NotesPage() {
                 notes.sort((a, b) => (
                     new Date(b.date) - new Date(a.date)
                 ))
+                toast.success('Notes retrieved!')
                 return notes
             } catch (e) {
-                console.log(e)
+                toast.error("Something went retrieving notes")
+                console.error('Error: ', e);
             }
+            toast.dismiss(toastID);
         }
 
         // only fetch data if there is a user logged in
         if (user !== null) {
-            fetchData().then(data => setNotes(data))
+            const toastID = toast.loading('Saving note...');
+            fetchData().then(data => {setNotes(data)}).finally(() => toast.dismiss(toastID))
         }
     }, [user])
 

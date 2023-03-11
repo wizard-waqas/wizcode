@@ -16,13 +16,10 @@ export default function AdminPage() {
     const [studentEmail, setStudentEmail] = useState("")
     const [title, setTitle] = useState('');
     const [date, setDate] = useState(getLongDate());
-    const [replitLink, setReplitLink] = useState('');
+    const [codeLink, setCodeLink] = useState('');
     const [topicsLearned, setTopicsLearned] = useState([]);
     const [homework, setHomework] = useState([]);
 
-    useEffect(() => {
-
-    })
 
     if (!user) {
         return <div>Loading...</div>
@@ -44,8 +41,8 @@ export default function AdminPage() {
         setDate(event.target.value);
     };
 
-    const handleReplitLinkChange = (event) => {
-        setReplitLink(event.target.value);
+    const handleCodeLinkChange = (event) => {
+        setCodeLink(event.target.value);
     };
 
     const handleTopicsLearnedChange = (event) => {
@@ -70,13 +67,13 @@ export default function AdminPage() {
         const note = {
             title,
             date,
-            replitLink,
+            codeLink,
             topicsLearned,
             homework: homeworkMap
         };
 
         const toastID = toast.loading('Saving note...');
-        const notesRef = firestore.collection(`users/${user.email}/notes`);
+        const notesRef = firestore.collection(`users/${studentEmail}/notes`);
         notesRef.doc(noteID).set(note).then(() => {
             toast.success('Note added successfully')
         }).catch((error) => {
@@ -88,10 +85,9 @@ export default function AdminPage() {
         // reset state
         setTitle('');
         setDate(getLongDate());
-        setReplitLink('');
+        setCodeLink('');
         setTopicsLearned([]);
         setHomework([]);
-
     }
 
     return (
@@ -99,17 +95,17 @@ export default function AdminPage() {
             <div className={"flex flex-col md:w-1/3 w-11/12 [&>*]:my-1"}>
                 <h1 className={"text-center text-3xl text-gold"}>Create Lesson Notes</h1>
                 <IconInputBox icon={MdOutlinePersonOutline} placeholder={"Enter student email"}
-                              state={studentEmail} setState={handleStudentEmailChange}/>
+                              state={studentEmail} handleChange={handleStudentEmailChange}/>
                 <IconInputBox icon={MdTitle} placeholder={"Add title of lesson"}
-                              state={title} setState={handleTitleChange}/>
+                              state={title} handleChange={handleTitleChange}/>
                 <IconInputBox icon={MdDateRange} placeholder={"Select lesson date"}
-                              state={date} setState={handleDateChange}/>
-                <IconInputBox icon={MdOutlineLink} placeholder={"Include replit link (optional)"}
-                              state={replitLink} setState={handleReplitLinkChange}/>
+                              state={date} handleChange={handleDateChange}/>
+                <IconInputBox icon={MdOutlineLink} placeholder={"Include link to code (optional)"}
+                              state={codeLink} handleChange={handleCodeLinkChange}/>
                 <IconInputBox icon={MdLightbulbOutline} placeholder={"Enter topics covered in this lesson"}
-                              state={topicsLearned} setState={handleTopicsLearnedChange}/>
+                              state={topicsLearned} handleChange={handleTopicsLearnedChange}/>
                 <IconInputBox icon={MdOutlineAssignment} placeholder={"Add homework assignments for this lesson"}
-                              state={homework} setState={handleHomeworkChange}/>
+                              state={homework} handleChange={handleHomeworkChange}/>
                 <button className={"bg-blue hover:bg-darkblue rounded-lg h-12 transition-all"}
                         onClick={handleSubmit}>Submit
                 </button>
