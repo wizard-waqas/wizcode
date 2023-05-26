@@ -1,14 +1,14 @@
 /* React JS Template using functions */
-import React, {useContext, useEffect} from "react"
+import React, {useContext} from "react"
 import {toast} from "react-hot-toast";
-import {auth, googleAuthProvider, yahooAuthProvider, signInWithProvider} from "../lib/firebase";
+import {auth, googleAuthProvider, signInWithProvider, yahooAuthProvider} from "../lib/firebase";
 import {UserContext} from "../lib/context";
-import {Navbar, Nav, Container, NavDropdown} from "react-bootstrap";
+import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import NavbarToggle from "react-bootstrap/NavbarToggle";
 import Link from "next/link";
 import {AiFillHome} from "react-icons/ai";
 import {RiTShirtFill} from "react-icons/ri"
-import {FaFileInvoice} from "react-icons/fa";
+import {FaFileInvoice, FaTools} from "react-icons/fa";
 import {BsFileEarmarkCodeFill} from "react-icons/bs";
 
 
@@ -18,6 +18,18 @@ import {BsFileEarmarkCodeFill} from "react-icons/bs";
  */
 export default function NavigationBar() {
     const {user} = useContext(UserContext);
+
+    // return (
+    //     <div className={"bg-red-500 h-28"}>
+    //         <div className={"flex items-center"}>
+    //             <img className={"w-16 h-16"} src={"/img/icon.png"} alt={"logo"} />
+    //             <div className={"ml-4"}>
+    //                 <h1 className={"text-4xl text-white font-Mogra"}>Trivvi</h1>
+    //                 <p className={"text-lg text-gold whitespace-nowrap"}>Study smarter, not harder</p>
+    //             </div>
+    //         </div>
+    //     </div>
+    // )
 
     return (
         <>
@@ -47,6 +59,11 @@ export default function NavigationBar() {
                                 </Nav.Link>
                                 <Nav.Link
                                     className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
+                                    href={"/tools/parsepdf"}>
+                                    <FaTools fill={"gold"} className={"mr-2"}/>TOOLS
+                                </Nav.Link>
+                                <Nav.Link
+                                    className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
                                     href={"https://www.etsy.com/listing/1114882742/wizcode-t-shirt-coding-unisex-men-and?click_key=b05d86769133b63325820913eca68044149e5746%3A1114882742&click_sum=fbaef5fe&rec_type=ss&ref=landingpage_similar_listing_top-1"}
                                     target={"_blank"}>
                                     <RiTShirtFill fill={"gold"} className={"mr-2"}/>MERCH
@@ -67,7 +84,6 @@ export default function NavigationBar() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-
         </>
     )
 }
