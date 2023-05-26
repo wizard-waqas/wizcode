@@ -39,7 +39,7 @@ const FileUploadInput = ({setFileData}) => {
             });
             const pdfData = pdfDataResponse.data;
 
-            const summarizedResponse = await axios.post("http://localhost:5000/api/ai-generate/summarize", {
+            const summarizedResponse = await axios.post("https://trivvi-6a057.uc.r.appspot.com/api/ai-generate/summarize", {
                 textData: pdfData
             });
             const summarizedText = summarizedResponse.data;
