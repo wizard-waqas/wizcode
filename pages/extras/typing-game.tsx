@@ -104,8 +104,8 @@ export default function GamePage() {
 
     useEffect(() => {
         const wordInput = document.querySelector("#word-input")
-        console.log(wordInput)
         if (wordInput) {
+            //@ts-ignore
             wordInput.focus()
         }
     }, [isGameOver]);
