@@ -59,8 +59,8 @@ export default function NavigationBar() {
                                 </Nav.Link>
                                 <Nav.Link
                                     className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
-                                    href={"/tools/parsepdf"}>
-                                    <FaTools fill={"gold"} className={"mr-2"}/>TOOLS
+                                    href={"/extras"}>
+                                    <FaTools fill={"gold"} className={"mr-2"}/>EXTRAS
                                 </Nav.Link>
                                 <Nav.Link
                                     className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
