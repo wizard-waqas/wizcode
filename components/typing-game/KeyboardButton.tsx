@@ -2,15 +2,14 @@ import {useEffect, useState} from "react";
 
 interface KeyboardKeyProps {
     letter: string;
-    isHighlighted: boolean;
+    letterColor: string;
 }
 
-export default function KeyboardKey({letter, isHighlighted}: KeyboardKeyProps) {
-    const highlightStyle = isHighlighted ? 'bg-blue' : 'bg-grey-500';
+export default function KeyboardKey({letter, letterColor}: KeyboardKeyProps) {
 
     return (
         <div
-             className={`flex justify-center items-center w-16 h-16 m-2 rounded ${highlightStyle}`}>
+             className={`flex justify-center items-center w-16 h-16 m-2 rounded ${letterColor}`}>
             {letter.toUpperCase()}
         </div>
     );
