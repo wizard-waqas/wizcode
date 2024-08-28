@@ -29,7 +29,8 @@ module.exports = {
                 "grey-200": "#CCCCCC",
                 "grey-300": "#AAAAAA",
                 "grey-400": "#202225",
-                "grey-500": "#212529"
+                "grey-500": "#212529",
+                black: "#000000",
             },
             fontFamily: {
                 "fredoka": ["Fredoka One"],
