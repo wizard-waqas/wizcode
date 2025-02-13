@@ -40,7 +40,7 @@ export default function CodingPractice() {
 
     return (
         <div className="flex justify-center mt-8 h-screen mx-4">
-            <CodeEditor problems={problems} selectedProblemId={selectedProblemId}/>
+            <CodeEditor problems={problems} selectedProblemId={selectedProblemId-1}/>
         </div>
     );
 }

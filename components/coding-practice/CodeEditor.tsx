@@ -17,7 +17,7 @@ interface EditorProps {
 
 export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
     const [currentProblemIndex, setCurrentProblemIndex] = useState(selectedProblemId || 0);
-    const currentProblem = problems[currentProblemIndex-1];
+    const currentProblem = problems[currentProblemIndex];
     const [userCode, setUserCode] = useState(currentProblem.functionStub);
     const [output, setOutput] = useState<string | null>(null);
 
