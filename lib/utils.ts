@@ -1,11 +1,9 @@
 import * as ts from "typescript";
 
-export default async function runCode(userCode: string, testCases: { input: string; expectedOutput: string }[]) {
+export default async function runCode(userCode: string, testCases: { input: string; expectedOutput: string }[], problemId: number) {
     try {
-        // Transpile TypeScript to JavaScript
         const transpiledCode = ts.transpileModule(userCode, {compilerOptions: {module: ts.ModuleKind.CommonJS}}).outputText;
 
-        // Initialize console output capture
         let consoleOutput = '';
         const captureLog = (...args: any[]) => {
             consoleOutput += args.map(arg => JSON.stringify(arg)).join(' ') + '\n';
@@ -20,7 +18,7 @@ export default async function runCode(userCode: string, testCases: { input: stri
       // User code
       ${transpiledCode}
     `;
-
+        let correctCount = 0;
         const functionName = extractFunctionName(userCode);
 
         // Map over test cases and evaluate each one
@@ -30,8 +28,23 @@ export default async function runCode(userCode: string, testCases: { input: stri
             const inputArray = JSON.parse(test.input); // Parse test input
             const result = func(inputArray, captureLog); // Execute the function with inputArray and captureLog
 
+            const expected = JSON.parse(test.expectedOutput);
+            const isPassed = valuesAreEqual(expected, result);
+            if (isPassed) correctCount++;
+
             return formatOutput(index, test, result)
         });
+
+        const allTestsPassed = correctCount === testCases.length;
+        if (allTestsPassed) {
+            await fetch(`/api/complete-problem/${problemId}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({completed: true}),
+            });
+        }
 
         let finalOutput = `\n${results.join("\n")}`;
         if (consoleOutput.trim() !== '') {
@@ -50,11 +63,7 @@ function formatOutput(index: number, test: any, result: any) {
         formattedResult = JSON.stringify(result);
     }
     const expectedArray = JSON.parse(test.expectedOutput);
-    console.log(result);
-    console.log(expectedArray);
     const isPassed = valuesAreEqual(result, expectedArray);
-    console.log({isPassed})
-    console.log("end")
     return `Test ${index + 1}: ${isPassed ? "✅ Passed" : `❌ Failed (Expected: ${test.expectedOutput}, Got: ${formattedResult})`}`;
 }
 

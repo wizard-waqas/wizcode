@@ -22,23 +22,32 @@ export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
     const [output, setOutput] = useState<string | null>(null);
 
     useEffect(() => {
+        const savedCode = localStorage.getItem(`problem-${currentProblem.id}`);
+        if (savedCode) {
+            setUserCode(savedCode);
+            return
+        }
         setUserCode(currentProblem.functionStub);
     }, [currentProblemIndex]);
 
     const handleRun = async () => {
-        const result = await runCode(userCode, currentProblem.testCases);
+        localStorage.setItem(`problem-${currentProblem.id}`, userCode);
+
+        const result = await runCode(userCode, currentProblem.testCases, currentProblem.id);
         setOutput(result);
     };
 
     const handleNext = () => {
         if (currentProblemIndex < problems.length - 1) {
             setCurrentProblemIndex(currentProblemIndex + 1);
+            setOutput(null);
         }
     };
 
     const handleBack = () => {
         if (currentProblemIndex > 0) {
             setCurrentProblemIndex(currentProblemIndex - 1);
+            setOutput(null);
         }
     };
 

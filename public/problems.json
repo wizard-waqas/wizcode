@@ -27,10 +27,14 @@
         "expectedOutput": "5"
       }
     ],
-    "hints": ["Use the modulus operator (%) to check if a number is even."],
-    "bonuses": ["Try solving this in one line using .filter()."],
+    "hints": [
+      "Use the modulus operator (%) to check if a number is even."
+    ],
+    "bonuses": [
+      "Try solving this in one line using .filter()."
+    ],
     "functionStub": "function countEvens(arr: number[]): number {\n  // Your code here\n  return 0;\n}",
-    "completed": true,
+    "completed": false,
     "difficulty": "EASY"
   },
   {
@@ -61,8 +65,12 @@
         "expectedOutput": "6"
       }
     ],
-    "hints": ["Loop through the string using a for loop or .split('').forEach()."],
-    "bonuses": ["Try solving this using .reduce()."],
+    "hints": [
+      "Loop through the string using a for loop or .split('').forEach()."
+    ],
+    "bonuses": [
+      "Try solving this using .reduce()."
+    ],
     "functionStub": "function countLetterA(sentence: string): number {\n  // Your code here\n  return 0;\n}",
     "completed": false,
     "difficulty": "EASY"
@@ -95,7 +103,9 @@
         "expectedOutput": "10"
       }
     ],
-    "hints": ["Use a loop and check if a character is in the set of vowels."],
+    "hints": [
+      "Use a loop and check if a character is in the set of vowels."
+    ],
     "bonuses": [
       "You can only use 1 if statement (Hint: use ||).",
       "Create an array of vowels and check if the letter exists in it."
@@ -132,10 +142,14 @@
         "expectedOutput": "[42]"
       }
     ],
-    "hints": ["Use the .reverse() method or loop through the array backwards."],
-    "bonuses": ["Solve this without using .reverse()."],
+    "hints": [
+      "Use the .reverse() method or loop through the array backwards."
+    ],
+    "bonuses": [
+      "Solve this without using .reverse()."
+    ],
     "functionStub": "function reverseArray(arr: number[]): number[] {\n  // Your code here\n  return [];\n}",
-    "completed": false,
+    "completed": true,
     "difficulty": "MEDIUM"
   }
 ]
