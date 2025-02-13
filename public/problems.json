@@ -149,7 +149,7 @@
       "Solve this without using .reverse()."
     ],
     "functionStub": "function reverseArray(arr: number[]): number[] {\n  // Your code here\n  return [];\n}",
-    "completed": true,
+    "completed": false,
     "difficulty": "MEDIUM"
   }
 ]
