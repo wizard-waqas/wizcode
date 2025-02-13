@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from "react"
 import {FaFileAlt} from "react-icons/fa";
-import {FaKeyboard} from "react-icons/fa";
+import {FaKeyboard, FaCode} from "react-icons/fa";
 import {GiKnifeFork} from "react-icons/gi";
 import {MdMenuBook, MdQuiz} from "react-icons/md";
 
 export default function ToolsPage() {
-    // implement flex wrap here
+
     return (
         <div className={"flex flex-col justify-center lg:flex-row lg:px-24"}>
+            <RedirectToTool text={"Coding Practice"} href={"/extras/coding-practice"} icon={<FaCode/>}/>
             <RedirectToTool text={"PDF Summarizer"} href={"/extras/parsepdf"} icon={<FaFileAlt/>}/>
             <RedirectToTool text={"Typing Game"} href={"/extras/typing-game"} icon={<FaKeyboard/>}/>
             <RedirectToTool text={"Recipe Finder"} href={"https://recipe-finder-335621.ue.r.appspot.com/"}
@@ -21,6 +22,8 @@ export default function ToolsPage() {
 function RedirectToTool({text, href, icon}) {
     const getImageRef = () => {
         switch (text) {
+            case "Coding Practice":
+                return "/img/extras/codingpractice.png"
             case "PDF Summarizer":
                 return "/img/extras/pdfsummarizer.png"
             case "Typing Game":
