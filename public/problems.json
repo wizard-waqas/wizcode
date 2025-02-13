@@ -1,0 +1,141 @@
+[
+  {
+    "id": 1,
+    "title": "Count Even Numbers",
+    "description": "Write a function that takes an array of numbers and counts the amount of even numbers.",
+    "examples": [
+      {
+        "input": "[1, 2, 3, 4, 5, 6]",
+        "output": "3"
+      },
+      {
+        "input": "[7, 9, 11, 13]",
+        "output": "0"
+      }
+    ],
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5, 6]",
+        "expectedOutput": "3"
+      },
+      {
+        "input": "[7, 9, 11, 13]",
+        "expectedOutput": "0"
+      },
+      {
+        "input": "[2, 4, 6, 8, 10]",
+        "expectedOutput": "5"
+      }
+    ],
+    "hints": ["Use the modulus operator (%) to check if a number is even."],
+    "bonuses": ["Try solving this in one line using .filter()."],
+    "functionStub": "function countEvens(arr: number[]): number {\n  // Your code here\n  return 0;\n}",
+    "completed": true,
+    "difficulty": "EASY"
+  },
+  {
+    "id": 2,
+    "title": "Count 'a' in a Sentence",
+    "description": "Write a function that loops through every character in a sentence and counts the amount of times the letter 'a' appears.",
+    "examples": [
+      {
+        "input": "\"Apples and bananas are amazing\"",
+        "output": "6"
+      },
+      {
+        "input": "\"No 'a' here!\"",
+        "output": "0"
+      }
+    ],
+    "testCases": [
+      {
+        "input": "\"Apples and bananas are amazing\"",
+        "expectedOutput": "6"
+      },
+      {
+        "input": "\"No 'a' here!\"",
+        "expectedOutput": "0"
+      },
+      {
+        "input": "\"Aardvark at an arcade\"",
+        "expectedOutput": "6"
+      }
+    ],
+    "hints": ["Loop through the string using a for loop or .split('').forEach()."],
+    "bonuses": ["Try solving this using .reduce()."],
+    "functionStub": "function countLetterA(sentence: string): number {\n  // Your code here\n  return 0;\n}",
+    "completed": false,
+    "difficulty": "EASY"
+  },
+  {
+    "id": 3,
+    "title": "Count Vowels in a Sentence",
+    "description": "Write a function that counts the number of times any vowel (a, e, i, o, u) appears in a sentence.",
+    "examples": [
+      {
+        "input": "\"This is a test sentence\"",
+        "output": "6"
+      },
+      {
+        "input": "\"BCDFG\"",
+        "output": "0"
+      }
+    ],
+    "testCases": [
+      {
+        "input": "\"This is a test sentence\"",
+        "expectedOutput": "6"
+      },
+      {
+        "input": "\"BCDFG\"",
+        "expectedOutput": "0"
+      },
+      {
+        "input": "\"Unbelievable occurrences!\"",
+        "expectedOutput": "10"
+      }
+    ],
+    "hints": ["Use a loop and check if a character is in the set of vowels."],
+    "bonuses": [
+      "You can only use 1 if statement (Hint: use ||).",
+      "Create an array of vowels and check if the letter exists in it."
+    ],
+    "functionStub": "function countVowels(sentence: string): number {\n  // Your code here\n  return 0;\n}",
+    "completed": false,
+    "difficulty": "EASY"
+  },
+  {
+    "id": 4,
+    "title": "Reverse an Array",
+    "description": "Write a function that reverses the order of an array of numbers.",
+    "examples": [
+      {
+        "input": "[1, 2, 3, 4, 5]",
+        "output": "[5, 4, 3, 2, 1]"
+      },
+      {
+        "input": "[99, 88, 77]",
+        "output": "[77, 88, 99]"
+      }
+    ],
+    "testCases": [
+      {
+        "input": "[1, 2, 3, 4, 5]",
+        "expectedOutput": "[5, 4, 3, 2, 1]"
+      },
+      {
+        "input": "[99, 88, 77]",
+        "expectedOutput": "[77, 88, 99]"
+      },
+      {
+        "input": "[42]",
+        "expectedOutput": "[42]"
+      }
+    ],
+    "hints": ["Use the .reverse() method or loop through the array backwards."],
+    "bonuses": ["Solve this without using .reverse()."],
+    "functionStub": "function reverseArray(arr: number[]): number[] {\n  // Your code here\n  return [];\n}",
+    "completed": false,
+    "difficulty": "MEDIUM"
+  }
+]
