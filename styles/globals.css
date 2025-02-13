@@ -87,3 +87,7 @@ body{
     opacity: 0;
     transform: translateY(100%);
 }
+
+.monaco-editor, .monaco-editor * {
+  font-family: 'Fira Code', Consolas, 'Courier New', monospace !important;
+}
