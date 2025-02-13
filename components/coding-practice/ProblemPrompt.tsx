@@ -38,6 +38,7 @@ export default function ProblemPrompt({problem}: ProblemPromptProps) {
                 </ul>
             )}
 
+            <br/>
             <button
                 className="mt-4 text-green-500 underline"
                 onClick={() => setShowBonuses(!showBonuses)}
