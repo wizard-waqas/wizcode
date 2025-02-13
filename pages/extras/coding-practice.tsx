@@ -47,12 +47,12 @@ export default function CodingPractice() {
 
 const DifficultyBadge = ({difficulty}: { difficulty: string }) => {
     let color = "gray";
-    if (difficulty === "EASY") color = "green";
-    if (difficulty === "MEDIUM") color = "yellow";
-    if (difficulty === "HARD") color = "red";
+    if (difficulty === "EASY") color = "bg-green-500";
+    if (difficulty === "MEDIUM") color = "bg-yellow-500";
+    if (difficulty === "HARD") color = "bg-red-500";
 
     return (
-        <div className={`w-4 h-4 rounded-full bg-${color}-500 mr-2`}/>
+        <div className={`w-4 h-4 rounded-full ${color} mr-2`}/>
     )
 }
 
