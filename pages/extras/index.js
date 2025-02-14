@@ -72,8 +72,9 @@ export default function ToolsPage() {
     ];
 
     return (
-        <div className={"flex flex-col items-center justify-center h-screen"}>
+        <div className={"flex flex-col items-center justify-center min-h-screen"}>
             <h1 className={"text-4xl font-bold mb-8"}>Tools</h1>
+            <p className={"text-md text-gray-300 font-bold mb-8 text-center"}>Projects, tools, and games I have built throughout the years.</p>
             <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4 lg:px-24"}>
                 {tools.map((tool, index) => (
                     <RedirectToTool key={index} {...tool}/>
@@ -85,7 +86,7 @@ export default function ToolsPage() {
 
 function RedirectToTool({text, description, href, icon, img}) {
     return (
-        <a className="flex flex-col m-2 items-center p-4 border-2 hover:border-blue transition-all rounded-lg space-y-4"
+        <a className="flex flex-col m-2 items-center p-4 border-2 border-gray-500 hover:border-blue transition-all rounded-lg space-y-4"
            href={href}>
             <div className="flex flex-col items-center text-center">
                 <div className="flex items-center space-x-2 text-lg font-semibold">
@@ -94,7 +95,7 @@ function RedirectToTool({text, description, href, icon, img}) {
                 </div>
                 <p className="text-sm text-gray-600 mt-1">{description}</p>
             </div>
-            <img className="w-80 h-40" src={img} alt={text}/>
+            <img className="w-80 h-40 rounded-lg " src={img} alt={text}/>
         </a>
     );
 }
