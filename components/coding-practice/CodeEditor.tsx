@@ -9,6 +9,7 @@ import {Problem} from "../../lib/types";
 import ProblemPrompt from "./ProblemPrompt";
 import "@fontsource/fira-code/400.css";
 import "@fontsource/fira-code/500.css";
+import WhatAmIDoingWrong from "./WhatAmIDoingWrong";
 
 interface EditorProps {
     problems: Problem[],
@@ -71,9 +72,11 @@ export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
                 </button>
             </div>
 
-
-            <div className="flex flex-col lg:flex-row">
-                <ProblemPrompt problem={currentProblem}/>
+            <div className="flex flex-col h-full lg:flex-row">
+                <div className={"flex flex-col w-full lg:w-1/2"}>
+                    <ProblemPrompt problem={currentProblem}/>
+                    <WhatAmIDoingWrong userCode={userCode}/>
+                </div>
 
                 <div className={"lg:ml-4 w-full lg:w-1/2"}>
                     <Editor
