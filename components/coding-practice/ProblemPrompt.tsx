@@ -4,12 +4,13 @@ import {Problem} from "../../lib/types";
 interface ProblemPromptProps {
     problem: Problem;
 }
+
 export default function ProblemPrompt({problem}: ProblemPromptProps) {
     const [showHints, setShowHints] = useState(false);
     const [showBonuses, setShowBonuses] = useState(false);
 
     return (
-        <div className="bg-gray-700 p-4 rounded-lg shadow w-full lg:w-1/2">
+        <div className="bg-gray-700 p-4 rounded-lg shadow w-full h-fit">
             <h2 className="text-xl font-bold">{problem.title}</h2>
             <p className="mb-4 mt-2">{problem.description}</p>
 
@@ -22,6 +23,7 @@ export default function ProblemPrompt({problem}: ProblemPromptProps) {
                 ))}
             </div>
 
+            {/* --DISPLAY HINTS-- */}
             <button
                 className="mt-4 text-blue-500 underline"
                 onClick={() => setShowHints(!showHints)}
@@ -37,8 +39,9 @@ export default function ProblemPrompt({problem}: ProblemPromptProps) {
                     ))}
                 </ul>
             )}
-
             <br/>
+
+            {/* --DISPLAY BONUSES-- */}
             <button
                 className="mt-4 text-green-500 underline"
                 onClick={() => setShowBonuses(!showBonuses)}

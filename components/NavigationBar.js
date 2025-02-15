@@ -54,11 +54,6 @@ export default function NavigationBar() {
                                 </Nav.Link>
                                 <Nav.Link
                                     className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
-                                    href={"/notes/"}>
-                                    <BsFileEarmarkCodeFill fill={"gold"} className={"mr-2"}/>NOTES
-                                </Nav.Link>
-                                <Nav.Link
-                                    className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
                                     href={"/extras"}>
                                     <FaTools fill={"gold"} className={"mr-2"}/>EXTRAS
                                 </Nav.Link>
@@ -68,11 +63,20 @@ export default function NavigationBar() {
                                     target={"_blank"}>
                                     <RiTShirtFill fill={"gold"} className={"mr-2"}/>MERCH
                                 </Nav.Link>
-                                <Nav.Link
-                                    className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
-                                    href={"/invoices/"}>
-                                    <FaFileInvoice fill={"gold"} className={"mr-2"}/>INVOICES
-                                </Nav.Link>
+                                {user && (
+                                    <>
+                                        <Nav.Link
+                                            className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
+                                            href={"/notes/"}>
+                                            <BsFileEarmarkCodeFill fill={"gold"} className={"mr-2"}/>NOTES
+                                        </Nav.Link>
+                                        <Nav.Link
+                                            className={"px-4 my-2 transition-all hover:border-b-2 hover:border-b-gold flex items-center"}
+                                            href={"/invoices/"}>
+                                            <FaFileInvoice fill={"gold"} className={"mr-2"}/>INVOICES
+                                        </Nav.Link>
+                                    </>
+                                )}
                             </ul>
 
                             {user ?

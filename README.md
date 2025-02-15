@@ -9,5 +9,4 @@ RECENT UPDATE:
 
 ### Coming soon
  - Scheduler
- - Projects
  - Codename: LwM
