@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import Editor from "@monaco-editor/react";
 import runCode from "../../lib/utils";
-import {IoPlay} from "react-icons/io5";
+import {IoPlay, IoHome} from "react-icons/io5";
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {Problem} from "../../lib/types";
 import ProblemPrompt from "./ProblemPrompt";
@@ -13,10 +13,11 @@ import WhatAmIDoingWrong from "./WhatAmIDoingWrong";
 
 interface EditorProps {
     problems: Problem[],
-    selectedProblemId?: number;
+    selectedProblemId: number;
+    setSelectedProblemId: Dispatch<SetStateAction<number | null>>;
 }
 
-export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
+export default function CodeEditor({problems, selectedProblemId, setSelectedProblemId}: EditorProps) {
     const [currentProblemIndex, setCurrentProblemIndex] = useState(selectedProblemId || 0);
     const currentProblem = problems[currentProblemIndex];
     const [userCode, setUserCode] = useState(currentProblem.functionStub);
@@ -52,13 +53,24 @@ export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
         }
     };
 
+    const handleHome = () => {
+        setSelectedProblemId(null);
+        setCurrentProblemIndex(0);
+    };
+
     return (
         <div className={"w-full lg:w-3/4 "}>
             <div className="flex justify-between items-center my-2">
-                <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
-                        onClick={handleBack}>
-                    <IoIosArrowBack size={24}/>
-                </button>
+                <div>
+                    <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+                            onClick={handleBack}>
+                        <IoIosArrowBack size={24}/>
+                    </button>
+                    <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2"
+                            onClick={handleHome}>
+                        <IoHome size={24}/>
+                    </button>
+                </div>
 
                 <button onClick={handleRun}
                         className="flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg text-green-100 transition tracking-wider">
@@ -78,20 +90,21 @@ export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
                     <WhatAmIDoingWrong userCode={userCode}/>
                 </div>
 
-                <div className={"lg:ml-4 w-full lg:w-1/2"}>
+                <div className={"lg:ml-2 w-full lg:w-1/2"}>
                     <Editor
                         className={"rounded-lg overflow-hidden"}
                         height="200px"
                         value={userCode}
                         onChange={(newValue) => setUserCode(newValue || "")}
                         defaultLanguage="typescript"
+                        theme="vs-dark"
                         options={{
-                            minimap: {enabled: false},  // Disable minimap
+                            minimap: {enabled: false},
                             scrollbar: {
-                                vertical: "hidden",  // Hide vertical scrollbar
-                                horizontal: "hidden", // Hide horizontal scrollbar
+                                vertical: "hidden",
+                                horizontal: "hidden",
                             },
-                            scrollBeyondLastLine: false, // Prevent scrolling beyond the last line
+                            scrollBeyondLastLine: false,
                             fontSize: 16,
                             fontFamily: "Fira Code, Consolas, 'Courier New', monospace",
                             fontLigatures: true,
@@ -99,9 +112,9 @@ export default function CodeEditor({problems, selectedProblemId}: EditorProps) {
                     />
 
                     {output && (
-                        <div className="mt-4 p-2 bg-gray-100 rounded-lg">
-                            <h2 className="text-xl tracking-wide text-gray-800">Test Results:</h2>
-                            <pre className={"text-black"}>{output}</pre>
+                        <div className="mt-2 p-2 bg-grey-600 rounded-lg">
+                            <h2 className="text-xl tracking-wide text-gray-300">Test Results:</h2>
+                            <pre className={"text-gray-400"}>{output}</pre>
                         </div>
                     )}
                 </div>
