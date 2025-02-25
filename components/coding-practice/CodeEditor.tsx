@@ -85,15 +85,15 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
             </div>
 
             <div className="flex flex-col h-full lg:flex-row">
-                <div className={"flex flex-col w-full lg:w-1/2"}>
+                <div className={"flex flex-col w-full lg:w-1/3"}>
                     <ProblemPrompt problem={currentProblem}/>
                     <WhatAmIDoingWrong userCode={userCode}/>
                 </div>
 
-                <div className={"lg:ml-2 w-full lg:w-1/2"}>
+                <div className={"lg:ml-2 w-full lg:w-3/4"}>
                     <Editor
                         className={"rounded-lg overflow-hidden"}
-                        height="200px"
+                        height="400px"
                         value={userCode}
                         onChange={(newValue) => setUserCode(newValue || "")}
                         defaultLanguage="typescript"
