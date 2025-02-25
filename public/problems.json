@@ -44,25 +44,25 @@
     "examples": [
       {
         "input": "\"Apples and bananas are amazing\"",
-        "output": "6"
+        "output": "8"
       },
       {
         "input": "\"No 'a' here!\"",
-        "output": "0"
+        "output": "1"
       }
     ],
     "testCases": [
       {
         "input": "\"Apples and bananas are amazing\"",
-        "expectedOutput": "6"
+        "expectedOutput": "8"
       },
       {
         "input": "\"No 'a' here!\"",
-        "expectedOutput": "0"
+        "expectedOutput": "1"
       },
       {
         "input": "\"Aardvark at an arcade\"",
-        "expectedOutput": "6"
+        "expectedOutput": "7"
       }
     ],
     "hints": [
@@ -82,21 +82,21 @@
     "examples": [
       {
         "input": "\"This is a test sentence\"",
-        "output": "6"
+        "output": "7"
       },
       {
-        "input": "\"BCDFG\"",
-        "output": "0"
+        "input": "\"BCDEFG\"",
+        "output": "1"
       }
     ],
     "testCases": [
       {
         "input": "\"This is a test sentence\"",
-        "expectedOutput": "6"
+        "expectedOutput": "7"
       },
       {
-        "input": "\"BCDFG\"",
-        "expectedOutput": "0"
+        "input": "\"BCDEFG\"",
+        "expectedOutput": "1"
       },
       {
         "input": "\"Unbelievable occurrences!\"",
@@ -149,7 +149,7 @@
       "Solve this without using .reverse()."
     ],
     "functionStub": "function reverseArray(arr: number[]): number[] {\n  // Your code here\n  return [];\n}",
-    "completed": false,
+    "completed": true,
     "difficulty": "MEDIUM"
   },
   {
@@ -198,7 +198,7 @@
     "examples": [
       {
         "input": "\"The quick brown fox jumps over the lazy dog\"",
-        "output": "\"jumps\""
+        "output": "\"quick\""
       },
       {
         "input": "\"Hello world!\"",
@@ -208,7 +208,7 @@
     "testCases": [
       {
         "input": "\"The quick brown fox jumps over the lazy dog\"",
-        "expectedOutput": "\"jumps\""
+        "expectedOutput": "\"quick\""
       },
       {
         "input": "\"A journey of a thousand miles begins with a single step\"",
@@ -228,7 +228,7 @@
       "Handle edge cases where the input is an empty string."
     ],
     "functionStub": "function longestWord(sentence: string): string {\n  // Your code here\n  return \"\";\n}",
-    "completed": false,
+    "completed": true,
     "difficulty": "EASY"
   },
   {
