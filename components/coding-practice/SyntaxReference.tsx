@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Disclosure} from "@headlessui/react";
 import {FaChevronUp} from "react-icons/fa"; // Import from react-icons
+// @ts-ignore
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs';
 import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
