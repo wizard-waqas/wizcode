@@ -141,7 +141,11 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
     );
 }
 
-function ResetModal({setModalOn, handleReset}) {
+interface ResetModalProps {
+    setModalOn: Dispatch<SetStateAction<boolean>>;
+    handleReset: () => void;
+}
+function ResetModal({setModalOn, handleReset}: ResetModalProps) {
     const handleCloseClick = () => {
         setModalOn(false)
     }
