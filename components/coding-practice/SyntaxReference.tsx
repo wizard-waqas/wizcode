@@ -30,6 +30,17 @@ const syntaxData: SyntaxItem[] = [
         color: "border-yellow-400",
     },
     {
+        title: "Conditional Operators",
+        syntax: `a < b // true when a is less than b
+a > b // true when a is greater than b
+a >= b // true when a is greater than or equal to b
+a <= b // true when a is less than or equal to b
+a === b // true when a and b are equal
+a !== b // true when a and b are not equal`,
+        example: `if (age >= 18) {\n\tconsole.log("You can vote.");\n} else {\n\tconsole.log("You are too young to vote.");\n}`,
+        color: "border-indigo-400",
+    },
+    {
         title: "If Statements",
         syntax: "if (CONDITION) {\n\tACTION;\n} else {\n\tELSE_ACTION;\n}",
         example: "if (age >= 18) {\n\tconsole.log(\"Adult\");\n} else {\n\tconsole.log(\"Minor\");\n}",
@@ -41,22 +52,12 @@ const syntaxData: SyntaxItem[] = [
         example: "for (let i = 0; i < 5; i++) {\n\tconsole.log(i);\n}",
         color: "border-gold",
     },
-    {
-        title: "Array Map",
-        syntax: "ARRAY.map((ITEM) => { ACTION; });",
-        example: "const doubled = [1, 2, 3].map(num => num * 2);",
-        color: "border-pink-400",
-    }, {
-        title: "Conditional Operators",
-        syntax: `a < b // true when a is less than b
-a > b // true when a is greater than b
-a >= b // true when a is greater than or equal to b
-a <= b // true when a is less than or equal to b
-a === b // true when a and b are equal
-a !== b // true when a and b are not equal`,
-        example: `if (age >= 18) {\n\tconsole.log("You can vote.");\n} else {\n\tconsole.log("You are too young to vote.");\n}`,
-        color: "border-indigo-400",
-    },
+    // {
+    //     title: "Array Map",
+    //     syntax: "ARRAY.map((ITEM) => { ACTION; });",
+    //     example: "const doubled = [1, 2, 3].map(num => num * 2);",
+    //     color: "border-pink-400",
+    // },
     {
         title: "While Loop",
         syntax: `while (CONDITION) {\n  // CODE\n}`,
