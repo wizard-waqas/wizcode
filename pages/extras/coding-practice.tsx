@@ -28,7 +28,7 @@ export default function CodingPractice() {
         <div className="flex justify-center mt-8 h-screen mx-4">
             <CodeEditor problems={problems} selectedProblemId={selectedProblemId - 1}
                         setSelectedProblemId={setSelectedProblemId}/>
-            {/*<SyntaxReference/>*/}
+            <SyntaxReference/>
         </div>
     );
 }
