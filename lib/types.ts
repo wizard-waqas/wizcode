@@ -16,3 +16,8 @@ enum Difficulty {
     MEDIUM,
     HARD
 }
+
+export interface CodeTestCase {
+    input: string;
+    expectedOutput: string
+}

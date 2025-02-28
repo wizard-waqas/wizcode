@@ -1,6 +1,7 @@
 import * as ts from "typescript";
+import {CodeTestCase} from "./types";
 
-export default async function runCode(userCode: string, testCases: { input: string; expectedOutput: string }[], problemId: number) {
+export default async function runCode(userCode: string, testCases: CodeTestCase[], problemId: number) {
     try {
         const transpiledCode = ts.transpileModule(userCode, {compilerOptions: {module: ts.ModuleKind.CommonJS}}).outputText;
 
@@ -23,10 +24,10 @@ export default async function runCode(userCode: string, testCases: { input: stri
 
         // Map over test cases and evaluate each one
         const results = testCases.map((test, index) => {
-            // Create a new Function with wrappedCode and execute user's function
+            // Create a Function with users' wrappedCode and execute it
             const func = new Function("arr", "captureLog", `${wrappedCode} return ${functionName}(arr);`);
-            const inputArray = JSON.parse(test.input); // Parse test input
-            const result = func(inputArray, captureLog); // Execute the function with inputArray and captureLog
+            const inputArray = JSON.parse(test.input);
+            const result = func(inputArray, captureLog);
 
             const expected = JSON.parse(test.expectedOutput);
             const isPassed = valuesAreEqual(expected, result);
