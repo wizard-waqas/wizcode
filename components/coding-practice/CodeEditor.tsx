@@ -3,7 +3,7 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import Editor from "@monaco-editor/react";
 import runCode from "../../lib/utils";
-import {IoPlay, IoHome} from "react-icons/io5";
+import {IoPlay, IoMenu, IoRefresh, IoCloseOutline} from "react-icons/io5";
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {Problem} from "../../lib/types";
 import ProblemPrompt from "./ProblemPrompt";
@@ -18,6 +18,7 @@ interface EditorProps {
 }
 
 export default function CodeEditor({problems, selectedProblemId, setSelectedProblemId}: EditorProps) {
+    const [resetModalOn, setResetModalOn] = useState(false);
     const [currentProblemIndex, setCurrentProblemIndex] = useState(selectedProblemId || 0);
     const currentProblem = problems[currentProblemIndex];
     const [userCode, setUserCode] = useState(currentProblem.functionStub);
@@ -53,6 +54,13 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
         }
     };
 
+    const handleReset = () => {
+        setUserCode(currentProblem.functionStub);
+        setOutput(null);
+        setResetModalOn(false);
+        localStorage.removeItem(`problem-${currentProblem.id}`);
+    }
+
     const handleHome = () => {
         setSelectedProblemId(null);
         setCurrentProblemIndex(0);
@@ -66,9 +74,10 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
                             onClick={handleBack}>
                         <IoIosArrowBack size={24}/>
                     </button>
-                    <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2"
-                            onClick={handleHome}>
-                        <IoHome size={24}/>
+                    <button
+                        className={`bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2 hidden lg:inline-block`}
+                        onClick={handleHome}>
+                        <IoMenu size={24}/>
                     </button>
                 </div>
 
@@ -78,10 +87,18 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
                     Run
                 </button>
 
-                <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
-                        onClick={handleNext}>
-                    <IoIosArrowForward size={24}/>
-                </button>
+                <div>
+                    <button
+                        className={`hidden lg:inline-block bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition mr-2`}
+                        onClick={() => setResetModalOn(true)}>
+                        <IoRefresh
+                            size={24}/>
+                    </button>
+                    <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+                            onClick={handleNext}>
+                        <IoIosArrowForward size={24}/>
+                    </button>
+                </div>
             </div>
 
             <div className="flex flex-col h-full lg:flex-row">
@@ -118,6 +135,47 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
                         </div>
                     )}
                 </div>
+            </div>
+            {resetModalOn && <ResetModal setModalOn={setResetModalOn} handleReset={handleReset}/>}
+        </div>
+    );
+}
+
+interface ResetModalProps {
+    setModalOn: Dispatch<SetStateAction<boolean>>;
+    handleReset: () => void;
+}
+function ResetModal({setModalOn, handleReset}: ResetModalProps) {
+    const handleCloseClick = () => {
+        setModalOn(false)
+    }
+
+    return (
+        <div className="fixed z-30 inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="bg-grey-500 md:w-1/3 w-full rounded-lg shadow-lg p-4 z-50">
+                    <div className="flex justify-end">
+                        <button onClick={handleCloseClick}>
+                            <IoCloseOutline size={32}/>
+                        </button>
+                    </div>
+                    <div className="text-gray-800 mb-4 w-full">
+                        <h3 className={"text-xl"}>Are you sure you want to reset this problem?</h3>
+                        <p className={"text-md text-gray-400"}>This will clear your code and test results.</p>
+                        {/*make a nevermind button which will close the modal*/}
+                        <button
+                            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition mt-4 mr-4"
+                            onClick={handleCloseClick}>
+                            Nevermind
+                        </button>
+                        <button
+                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition mt-4"
+                            onClick={handleReset}>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+                <div className="fixed inset-0 bg-black opacity-50 z-0" onClick={handleCloseClick}/>
             </div>
         </div>
     );

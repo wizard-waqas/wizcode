@@ -1,6 +1,7 @@
 import * as ts from "typescript";
+import {CodeTestCase} from "./types";
 
-export default async function runCode(userCode: string, testCases: { input: string; expectedOutput: string }[], problemId: number) {
+export default async function runCode(userCode: string, testCases: CodeTestCase[], problemId: number) {
     try {
         const transpiledCode = ts.transpileModule(userCode, {compilerOptions: {module: ts.ModuleKind.CommonJS}}).outputText;
 
@@ -23,10 +24,10 @@ export default async function runCode(userCode: string, testCases: { input: stri
 
         // Map over test cases and evaluate each one
         const results = testCases.map((test, index) => {
-            // Create a new Function with wrappedCode and execute user's function
+            // Create a Function with users' wrappedCode and execute it
             const func = new Function("arr", "captureLog", `${wrappedCode} return ${functionName}(arr);`);
-            const inputArray = JSON.parse(test.input); // Parse test input
-            const result = func(inputArray, captureLog); // Execute the function with inputArray and captureLog
+            const inputArray = JSON.parse(test.input);
+            const result = func(inputArray, captureLog);
 
             const expected = JSON.parse(test.expectedOutput);
             const isPassed = valuesAreEqual(expected, result);
@@ -47,8 +48,10 @@ export default async function runCode(userCode: string, testCases: { input: stri
         }
 
         let finalOutput = `\n${results.join("\n")}`;
+        finalOutput += `\n${allTestsPassed ? "✅ All tests passed!" : `❌ ${correctCount} out of ${testCases.length} tests passed.`}`;
         if (consoleOutput.trim() !== '') {
-            finalOutput += `\n\nConsole Output:\n${consoleOutput}`;
+            finalOutput += '\n\n=============================';
+            finalOutput += `\nConsole Output:\n${consoleOutput}`;
         }
 
         return finalOutput;
@@ -57,14 +60,22 @@ export default async function runCode(userCode: string, testCases: { input: stri
     }
 }
 
-function formatOutput(index: number, test: any, result: any) {
+function formatOutput(index: number, test: CodeTestCase, result: any) {
     let formattedResult = result;
     if (Array.isArray(result)) {
         formattedResult = JSON.stringify(result);
     }
     const expectedArray = JSON.parse(test.expectedOutput);
     const isPassed = valuesAreEqual(result, expectedArray);
-    return `Test ${index + 1}: ${isPassed ? "✅ Passed" : `❌ Failed (Expected: ${test.expectedOutput}, Got: ${formattedResult})`}`;
+
+    const inputData = test.input;
+
+    let output = '';
+    output += `Test ${index + 1}:\n`;
+    output += `Input: ${inputData}\n`;
+    output += `${isPassed ? "✅ Passed" : `❌ Failed (Expected: ${test.expectedOutput}, Got: ${formattedResult})`}\n`;
+
+    return output
 }
 
 function extractFunctionName(code: string) {
