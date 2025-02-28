@@ -3,7 +3,7 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import Editor from "@monaco-editor/react";
 import runCode from "../../lib/utils";
-import {IoPlay, IoHome} from "react-icons/io5";
+import {IoPlay, IoMenu} from "react-icons/io5";
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {Problem} from "../../lib/types";
 import ProblemPrompt from "./ProblemPrompt";
@@ -66,9 +66,9 @@ export default function CodeEditor({problems, selectedProblemId, setSelectedProb
                             onClick={handleBack}>
                         <IoIosArrowBack size={24}/>
                     </button>
-                    <button className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2"
+                    <button className={`hidden lg:inline-block bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2`}
                             onClick={handleHome}>
-                        <IoHome size={24}/>
+                        <IoMenu size={24}/>
                     </button>
                 </div>
 
