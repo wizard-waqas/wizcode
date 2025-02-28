@@ -47,8 +47,10 @@ export default async function runCode(userCode: string, testCases: { input: stri
         }
 
         let finalOutput = `\n${results.join("\n")}`;
+        finalOutput += `\n${allTestsPassed ? "✅ All tests passed!" : `❌ ${correctCount} out of ${testCases.length} tests passed.`}`;
         if (consoleOutput.trim() !== '') {
-            finalOutput += `\n\nConsole Output:\n${consoleOutput}`;
+            finalOutput += '\n\n=============================';
+            finalOutput += `\nConsole Output:\n${consoleOutput}`;
         }
 
         return finalOutput;
@@ -57,14 +59,22 @@ export default async function runCode(userCode: string, testCases: { input: stri
     }
 }
 
-function formatOutput(index: number, test: any, result: any) {
+function formatOutput(index: number, test: CodeTestCase, result: any) {
     let formattedResult = result;
     if (Array.isArray(result)) {
         formattedResult = JSON.stringify(result);
     }
     const expectedArray = JSON.parse(test.expectedOutput);
     const isPassed = valuesAreEqual(result, expectedArray);
-    return `Test ${index + 1}: ${isPassed ? "✅ Passed" : `❌ Failed (Expected: ${test.expectedOutput}, Got: ${formattedResult})`}`;
+
+    const inputData = test.input;
+
+    let output = '';
+    output += `Test ${index + 1}:\n`;
+    output += `Input: ${inputData}\n`;
+    output += `${isPassed ? "✅ Passed" : `❌ Failed (Expected: ${test.expectedOutput}, Got: ${formattedResult})`}\n`;
+
+    return output
 }
 
 function extractFunctionName(code: string) {
