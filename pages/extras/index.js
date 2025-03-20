@@ -1,5 +1,5 @@
 import React from "react";
-import {FaFileAlt, FaKeyboard, FaCode, FaCar} from "react-icons/fa";
+import {FaFileAlt, FaKeyboard, FaCode, FaCar, FaMoneyBill} from "react-icons/fa";
 import {GiKnifeFork} from "react-icons/gi";
 import {MdMenuBook, MdQuiz, MdLinkedCamera} from "react-icons/md";
 import {CgDebug} from "react-icons/cg";
@@ -19,6 +19,13 @@ export default function ToolsPage() {
             href: "https://wizardinstalls.com/",
             icon: <FaCar/>,
             img: "/img/extras/wizardinstalls.png"
+        },
+        {
+            text: "Your Rich Life",
+            description: "Savings goal tracker based on Copilot Money.",
+            href: "https://yourrichlife.vercel.app/",
+            icon: <FaMoneyBill/>,
+            img: "/img/extras/yourrichlife.png"
         },
         {
             text: "AI PDF Summarizer",
@@ -93,7 +100,7 @@ function RedirectToTool({text, description, href, icon, img}) {
                     <span className="text-2xl">{icon}</span>
                     <span>{text}</span>
                 </div>
-                <p className="text-sm text-gray-600 mt-1">{description}</p>
+                <p className="text-sm text-gray-500 mt-1">{description}</p>
             </div>
             <img className="w-80 h-40 rounded-lg " src={img} alt={text}/>
         </a>
