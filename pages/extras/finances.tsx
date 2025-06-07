@@ -162,7 +162,15 @@ export default function FinancesDashboard() {
   );
 }
 
-function MetricCard({ title, value, subtitle, change, darkMode }) {
+interface MetricCardProps {
+  title: string;
+  value: string | number;
+  subtitle: string;
+  change: number;
+  darkMode: boolean;
+}
+
+function MetricCard({ title, value, subtitle, change, darkMode }: MetricCardProps) {
   const isPositive = change > 0;
   const isNegative = change < 0;
 
