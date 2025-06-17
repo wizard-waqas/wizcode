@@ -1,203 +1,131 @@
 import React from 'react';
 import {
-  BarChart,
-  Bar,
   LineChart,
   Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer
 } from 'recharts';
 
-// Sample data - in a real app, this would come from SheetDB
-const clientData = [
-  { month: '2024-12', clients: 3 },
-  { month: '2025-01', clients: 4 },
-  { month: '2025-02', clients: 6 },
-  { month: '2025-03', clients: 19 },
-  { month: '2025-04', clients: 16 },
-  { month: '2025-05', clients: 21 },
-  { month: '2025-06', clients: 8 },
-];
-
-const serviceData = [
-  { month: '2024-12', packageA: 2, packageB: 1, packageC: 0 },
-  { month: '2025-01', packageA: 2, packageB: 2, packageC: 0 },
-  { month: '2025-02', packageA: 3, packageB: 2, packageC: 1 },
-  { month: '2025-03', packageA: 7, packageB: 10, packageC: 2 },
-  { month: '2025-04', packageA: 5, packageB: 8, packageC: 3 },
-  { month: '2025-05', packageA: 6, packageB: 12, packageC: 3 },
-  { month: '2025-06', packageA: 3, packageB: 4, packageC: 1 },
-];
-
-const hourlyRateData = [
-  { month: '2024-12', rate: 20.83 },
-  { month: '2025-01', rate: -13.83 },
-  { month: '2025-02', rate: 11.67 },
-  { month: '2025-03', rate: 81.32 },
-  { month: '2025-04', rate: 68.75 },
-  { month: '2025-05', rate: 88.27 },
-  { month: '2025-06', rate: 108.29 },
-];
-
-// Format month labels
-const formatMonth = (month: string) => {
-  const date = new Date(month);
-  return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
-};
-
 interface OperationalTabProps {
+  data: any[];
   darkMode: boolean;
 }
 
-const OperationalTab: React.FC<OperationalTabProps> = ({ darkMode }) => {
-  const textColor = darkMode ? '#E5E7EB' : '#374151';
-  const gridColor = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-
+export default function OperationalTab({ data, darkMode }: OperationalTabProps) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {/* Client Growth Chart */}
+    <div className="space-y-8">
+      {/* Client Growth */}
       <div className={`p-6 rounded-xl ${
         darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
       }`}>
-        <h2 className="text-xl font-semibold mb-4">Client Growth</h2>
+        <h3 className="text-xl font-semibold mb-4">Client Growth</h3>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={clientData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#e5e7eb'} />
               <XAxis 
                 dataKey="month" 
-                tickFormatter={formatMonth} 
-                stroke={textColor}
+                stroke={darkMode ? '#9ca3af' : '#6b7280'}
                 fontSize={12}
               />
               <YAxis 
-                stroke={textColor}
+                stroke={darkMode ? '#9ca3af' : '#6b7280'}
                 fontSize={12}
               />
               <Tooltip 
-                labelFormatter={formatMonth}
                 contentStyle={{
-                  backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
-                  border: darkMode ? '1px solid #374151' : '1px solid #E5E7EB',
+                  backgroundColor: darkMode ? '#1f2937' : '#ffffff',
+                  border: `1px solid ${darkMode ? '#374151' : '#e5e7eb'}`,
                   borderRadius: '8px',
-                  color: textColor
+                  color: darkMode ? '#ffffff' : '#000000'
                 }}
+                formatter={(value: any) => [value, 'Clients']}
               />
-              <Legend />
-              <Bar 
+              <Line 
+                type="monotone" 
                 dataKey="clients" 
-                name="Number of Clients"
-                fill="#3B82F6" 
-                radius={[4, 4, 0, 0]}
+                stroke="#10b981" 
+                strokeWidth={3}
+                dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
               />
-            </BarChart>
+            </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Service Popularity Chart */}
+      {/* Service Package Popularity */}
       <div className={`p-6 rounded-xl ${
         darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
       }`}>
-        <h2 className="text-xl font-semibold mb-4">Service Popularity</h2>
+        <h3 className="text-xl font-semibold mb-4">Service Package Popularity</h3>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={serviceData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#e5e7eb'} />
               <XAxis 
                 dataKey="month" 
-                tickFormatter={formatMonth} 
-                stroke={textColor}
+                stroke={darkMode ? '#9ca3af' : '#6b7280'}
                 fontSize={12}
               />
               <YAxis 
-                stroke={textColor}
+                stroke={darkMode ? '#9ca3af' : '#6b7280'}
                 fontSize={12}
               />
               <Tooltip 
-                labelFormatter={formatMonth}
                 contentStyle={{
-                  backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
-                  border: darkMode ? '1px solid #374151' : '1px solid #E5E7EB',
+                  backgroundColor: darkMode ? '#1f2937' : '#ffffff',
+                  border: `1px solid ${darkMode ? '#374151' : '#e5e7eb'}`,
                   borderRadius: '8px',
-                  color: textColor
+                  color: darkMode ? '#ffffff' : '#000000'
                 }}
               />
-              <Legend />
-              <Bar 
-                dataKey="packageA" 
-                name="Package A (front only)"
-                fill="#3B82F6" 
-                stackId="a"
-              />
-              <Bar 
-                dataKey="packageB" 
-                name="Package B (front + rear)"
-                fill="#10B981" 
-                stackId="a"
-              />
-              <Bar 
-                dataKey="packageC" 
-                name="Package C (full vehicle)"
-                fill="#F59E0B" 
-                stackId="a"
-              />
+              <Bar dataKey="packageA" fill="#3b82f6" name="Package A" />
+              <Bar dataKey="packageB" fill="#ef4444" name="Package B" />
+              <Bar dataKey="packageC" fill="#f59e0b" name="Package C" />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Hourly Rate Chart */}
-      <div className={`col-span-1 lg:col-span-2 p-6 rounded-xl ${
+      {/* Hourly Rate Trend */}
+      <div className={`p-6 rounded-xl ${
         darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
       }`}>
-        <h2 className="text-xl font-semibold mb-4">Hourly Rate Trend</h2>
+        <h3 className="text-xl font-semibold mb-4">Hourly Rate Trend</h3>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={hourlyRateData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#e5e7eb'} />
               <XAxis 
                 dataKey="month" 
-                tickFormatter={formatMonth} 
-                stroke={textColor}
+                stroke={darkMode ? '#9ca3af' : '#6b7280'}
                 fontSize={12}
               />
               <YAxis 
-                stroke={textColor}
+                stroke={darkMode ? '#9ca3af' : '#6b7280'}
                 fontSize={12}
                 tickFormatter={(value) => `$${value}`}
               />
               <Tooltip 
-                formatter={(value: number) => [`$${value.toFixed(2)}`, 'Hourly Rate']}
-                labelFormatter={formatMonth}
                 contentStyle={{
-                  backgroundColor: darkMode ? '#1F2937' : '#FFFFFF',
-                  border: darkMode ? '1px solid #374151' : '1px solid #E5E7EB',
+                  backgroundColor: darkMode ? '#1f2937' : '#ffffff',
+                  border: `1px solid ${darkMode ? '#374151' : '#e5e7eb'}`,
                   borderRadius: '8px',
-                  color: textColor
+                  color: darkMode ? '#ffffff' : '#000000'
                 }}
+                formatter={(value: any) => [`$${value.toFixed(2)}`, 'Hourly Rate']}
               />
               <Line 
                 type="monotone" 
-                dataKey="rate" 
-                name="Hourly Rate"
-                stroke="#8B5CF6" 
-                strokeWidth={3.5}
-                dot={{ r: 4, fill: '#8B5CF6' }}
-                activeDot={{ r: 8 }}
+                dataKey="hourlyRate" 
+                stroke="#8b5cf6" 
+                strokeWidth={3}
+                dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -205,7 +133,5 @@ const OperationalTab: React.FC<OperationalTabProps> = ({ darkMode }) => {
       </div>
     </div>
   );
-};
-
-export default OperationalTab;
+}
 
