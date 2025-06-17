@@ -1,16 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Upload } from 'lucide-react';
+import { Moon, Sun, RefreshCw } from 'lucide-react';
 import FinancialTab from '../../components/dashboard/FinancialTab';
 import OperationalTab from '../../components/dashboard/OperationalTab';
 import GrowthTab from '../../components/dashboard/GrowthTab';
 import SummaryTab from '../../components/dashboard/SummaryTab';
-import FileUploadModal from '../../components/dashboard/FileUploadModal';
+
+interface DashboardData {
+  financialData: any[];
+  currentMonth: {
+    expenses: number;
+    revenue: number;
+    profit: number;
+    clients: number;
+    month: string;
+    expensesChange: number;
+    revenueChange: number;
+    profitChange: number;
+    clientsChange: number;
+  };
+  summary: {
+    totalRevenue: number;
+    totalExpenses: number;
+    totalEarnings: number;
+    lifetimeProfitMargin: number;
+    peakRevenueMonth: string;
+    peakRevenue: number;
+    totalMonths: number;
+  };
+  lastUpdated: string;
+}
 
 export default function FinancesDashboard() {
   const [darkMode, setDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState('financial');
-  const [showUploadModal, setShowUploadModal] = useState(false);
-  const [dashboardData, setDashboardData] = useState(null);
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
     // Apply dark mode class to the document
@@ -20,6 +46,39 @@ export default function FinancesDashboard() {
       document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
+
+  // Fetch data from Google Sheets API
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch('/api/dashboard-data');
+      const result = await response.json();
+      
+      if (result.success) {
+        setDashboardData(result.data);
+        setLastUpdated(new Date(result.data.lastUpdated));
+      } else {
+        setError(result.message || 'Failed to fetch data');
+      }
+    } catch (err) {
+      console.error('Error fetching dashboard data:', err);
+      setError('Failed to connect to Google Sheets');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load data on component mount
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  // Refresh data manually
+  const handleRefresh = () => {
+    fetchDashboardData();
+  };
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -32,17 +91,40 @@ export default function FinancesDashboard() {
     { id: 'summary', label: 'Summary', count: '4' }
   ];
 
-  const currentMonthData = {
-    expenses: 780,
-    revenue: 2100,
-    profit: 1320,
-    clients: 8,
-    month: 'June 2025',
-    expensesChange: -68.2,
-    revenueChange: -51.2,
-    profitChange: -30.5,
-    clientsChange: -61.9
-  };
+  if (loading) {
+    return (
+      <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-4" />
+            <p>Loading dashboard data from Google Sheets...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="text-red-500 mb-4">⚠️</div>
+            <h2 className="text-xl font-bold mb-2">Error Loading Data</h2>
+            <p className="text-gray-500 mb-4">{error}</p>
+            <button
+              onClick={handleRefresh}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const { currentMonth, summary } = dashboardData || {};
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
@@ -54,7 +136,12 @@ export default function FinancesDashboard() {
           <div>
             <h1 className="text-4xl font-bold">Business Growth Dashboard</h1>
             <p className={`text-lg ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              December 2024 - June 2025
+              Powered by Google Sheets
+              {lastUpdated && (
+                <span className="ml-2 text-sm">
+                  • Last updated: {lastUpdated.toLocaleString()}
+                </span>
+              )}
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -70,46 +157,54 @@ export default function FinancesDashboard() {
               {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
             <button
-              onClick={() => setShowUploadModal(true)}
-              className="flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+              onClick={handleRefresh}
+              disabled={loading}
+              className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-colors font-medium ${
+                darkMode 
+                  ? 'bg-gray-800 hover:bg-gray-700 text-gray-300' 
+                  : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-300'
+              } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title="Refresh data from Google Sheets"
             >
-              <Upload className="h-4 w-4" />
-              Update Spreadsheet
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh Data
             </button>
           </div>
         </header>
 
         {/* Metric Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <MetricCard
-            title="Current Month Expenses"
-            value={`$${currentMonthData.expenses.toLocaleString()}`}
-            subtitle={currentMonthData.month}
-            change={currentMonthData.expensesChange}
-            darkMode={darkMode}
-          />
-          <MetricCard
-            title="Current Month Revenue"
-            value={`$${currentMonthData.revenue.toLocaleString()}`}
-            subtitle={currentMonthData.month}
-            change={currentMonthData.revenueChange}
-            darkMode={darkMode}
-          />
-          <MetricCard
-            title="Current Month Profit"
-            value={`$${currentMonthData.profit.toLocaleString()}`}
-            subtitle={currentMonthData.month}
-            change={currentMonthData.profitChange}
-            darkMode={darkMode}
-          />
-          <MetricCard
-            title="Current Month Clients"
-            value={currentMonthData.clients}
-            subtitle={currentMonthData.month}
-            change={currentMonthData.clientsChange}
-            darkMode={darkMode}
-          />
-        </div>
+        {currentMonth && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <MetricCard
+              title="Current Month Expenses"
+              value={`$${currentMonth.expenses?.toLocaleString() || '0'}`}
+              subtitle={currentMonth.month || 'Current Month'}
+              change={currentMonth.expensesChange || 0}
+              darkMode={darkMode}
+            />
+            <MetricCard
+              title="Current Month Revenue"
+              value={`$${currentMonth.revenue?.toLocaleString() || '0'}`}
+              subtitle={currentMonth.month || 'Current Month'}
+              change={currentMonth.revenueChange || 0}
+              darkMode={darkMode}
+            />
+            <MetricCard
+              title="Current Month Profit"
+              value={`$${currentMonth.profit?.toLocaleString() || '0'}`}
+              subtitle={currentMonth.month || 'Current Month'}
+              change={currentMonth.profitChange || 0}
+              darkMode={darkMode}
+            />
+            <MetricCard
+              title="Current Month Clients"
+              value={currentMonth.clients?.toString() || '0'}
+              subtitle={currentMonth.month || 'Current Month'}
+              change={currentMonth.clientsChange || 0}
+              darkMode={darkMode}
+            />
+          </div>
+        )}
 
         {/* Tab Navigation */}
         <div className="flex space-x-1 mb-8">
@@ -143,20 +238,32 @@ export default function FinancesDashboard() {
 
         {/* Tab Content */}
         <div className="min-h-[600px]">
-          {activeTab === 'financial' && <FinancialTab darkMode={darkMode} />}
-          {activeTab === 'operational' && <OperationalTab darkMode={darkMode} />}
-          {activeTab === 'growth' && <GrowthTab darkMode={darkMode} />}
-          {activeTab === 'summary' && <SummaryTab darkMode={darkMode} />}
+          {activeTab === 'financial' && (
+            <FinancialTab 
+              data={dashboardData?.financialData || []} 
+              darkMode={darkMode} 
+            />
+          )}
+          {activeTab === 'operational' && (
+            <OperationalTab 
+              data={dashboardData?.financialData || []} 
+              darkMode={darkMode} 
+            />
+          )}
+          {activeTab === 'growth' && (
+            <GrowthTab 
+              data={dashboardData?.financialData || []} 
+              darkMode={darkMode} 
+            />
+          )}
+          {activeTab === 'summary' && (
+            <SummaryTab 
+              data={dashboardData?.financialData || []} 
+              summary={dashboardData?.summary || {}}
+              darkMode={darkMode} 
+            />
+          )}
         </div>
-
-        {/* File Upload Modal */}
-        {showUploadModal && (
-          <FileUploadModal
-            isOpen={showUploadModal}
-            onClose={() => setShowUploadModal(false)}
-            darkMode={darkMode}
-          />
-        )}
       </div>
     </div>
   );
@@ -199,7 +306,7 @@ function MetricCard({ title, value, subtitle, change, darkMode }: MetricCardProp
         }`}>
           {isPositive && '↗'}
           {isNegative && '↘'}
-          {Math.abs(change).toFixed(1)}% from May
+          {Math.abs(change).toFixed(1)}%
         </span>
       </div>
     </div>

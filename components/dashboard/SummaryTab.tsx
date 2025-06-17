@@ -1,97 +1,164 @@
 import React from 'react';
-import { DollarSign, Users, Calendar, TrendingUp } from 'lucide-react';
 
 interface SummaryTabProps {
+  data: any[];
+  summary: any;
   darkMode: boolean;
 }
 
-const SummaryTab: React.FC<SummaryTabProps> = ({ darkMode }) => {
+export default function SummaryTab({ data, summary, darkMode }: SummaryTabProps) {
+  const {
+    totalRevenue = 0,
+    totalExpenses = 0,
+    totalEarnings = 0,
+    lifetimeProfitMargin = 0,
+    peakRevenueMonth = 'N/A',
+    peakRevenue = 0,
+    totalMonths = 0
+  } = summary;
+
+  const insights = [
+    {
+      title: "Financial Performance",
+      items: [
+        `Total Revenue: $${totalRevenue.toLocaleString()}`,
+        `Total Expenses: $${totalExpenses.toLocaleString()}`,
+        `Total Earnings: $${totalEarnings.toLocaleString()}`,
+        `Lifetime Profit Margin: ${lifetimeProfitMargin}%`
+      ]
+    },
+    {
+      title: "Peak Performance",
+      items: [
+        `Best Revenue Month: ${peakRevenueMonth}`,
+        `Peak Revenue: $${peakRevenue.toLocaleString()}`,
+        `Total Months Tracked: ${totalMonths}`
+      ]
+    },
+    {
+      title: "Business Insights",
+      items: [
+        data.length > 0 && data[data.length - 1]?.revenue > data[0]?.revenue 
+          ? "📈 Revenue trend is positive overall"
+          : "📉 Revenue needs attention",
+        lifetimeProfitMargin > 30 
+          ? "💰 Healthy profit margins maintained"
+          : "⚠️ Profit margins could be improved",
+        data.some(row => row.clients > 15) 
+          ? "👥 Successfully scaled client base"
+          : "🎯 Focus on client acquisition",
+        data.length >= 6 
+          ? "📊 Sufficient data for trend analysis"
+          : "📈 Continue tracking for better insights"
+      ]
+    },
+    {
+      title: "Recommendations",
+      items: [
+        lifetimeProfitMargin < 20 
+          ? "🔍 Review expense management strategies"
+          : "✅ Maintain current cost control",
+        data.some(row => row.revenue > 4000) 
+          ? "🚀 Capitalize on high-revenue periods"
+          : "📈 Explore revenue growth opportunities",
+        "📱 Consider automating data collection",
+        "📊 Set up monthly performance reviews"
+      ]
+    }
+  ];
+
   return (
-    <div className="grid grid-cols-1 gap-6">
-      <div className={`p-8 rounded-xl ${
+    <div className="space-y-8">
+      {/* Key Metrics Summary */}
+      <div className={`p-6 rounded-xl ${
         darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
       }`}>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-2">Business Performance Summary</h2>
-          <p className={`text-lg ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-            Key insights from your financial and operational data
-          </p>
+        <h3 className="text-xl font-semibold mb-6">Business Performance Summary</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className={`p-4 rounded-lg ${
+            darkMode ? 'bg-gray-700' : 'bg-gray-50'
+          }`}>
+            <div className="text-2xl font-bold text-blue-500">
+              ${totalRevenue.toLocaleString()}
+            </div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Total Revenue
+            </div>
+          </div>
+          <div className={`p-4 rounded-lg ${
+            darkMode ? 'bg-gray-700' : 'bg-gray-50'
+          }`}>
+            <div className="text-2xl font-bold text-red-500">
+              ${totalExpenses.toLocaleString()}
+            </div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Total Expenses
+            </div>
+          </div>
+          <div className={`p-4 rounded-lg ${
+            darkMode ? 'bg-gray-700' : 'bg-gray-50'
+          }`}>
+            <div className={`text-2xl font-bold ${totalEarnings >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+              ${totalEarnings.toLocaleString()}
+            </div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Total Earnings
+            </div>
+          </div>
+          <div className={`p-4 rounded-lg ${
+            darkMode ? 'bg-gray-700' : 'bg-gray-50'
+          }`}>
+            <div className={`text-2xl font-bold ${lifetimeProfitMargin >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+              {lifetimeProfitMargin}%
+            </div>
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Profit Margin
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold flex items-center gap-3">
-              <DollarSign className="h-6 w-6 text-blue-500" />
-              Financial Performance
-            </h3>
-            <ul className="space-y-3 pl-9">
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className="font-medium">Revenue Growth:</span> Your business experienced a significant turning point in March 2025, with revenue jumping from $140 in February to $3,995 in March (a 2700% increase).
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className="font-medium">Profit Margin Improvement:</span> Your profit margin has shown consistent improvement, starting from negative values in December 2024 (-24.65%) and January 2025 (-110.83%) to reaching a peak of 72.19% in June 2025.
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className="font-medium">Highest Revenue Month:</span> May 2025 was your best month for revenue at $4,305.
-              </li>
+      {/* Insights Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {insights.map((section, index) => (
+          <div key={index} className={`p-6 rounded-xl ${
+            darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
+          }`}>
+            <h4 className="text-lg font-semibold mb-4">{section.title}</h4>
+            <ul className="space-y-2">
+              {section.items.map((item, itemIndex) => (
+                <li key={itemIndex} className={`text-sm ${
+                  darkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
+        ))}
+      </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold flex items-center gap-3">
-              <Users className="h-6 w-6 text-green-500" />
-              Operational Metrics
-            </h3>
-            <ul className="space-y-3 pl-9">
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className="font-medium">Client Growth:</span> The number of clients increased dramatically from 6 in February to 19 in March, peaking at 21 clients in May 2025.
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className="font-medium">Service Popularity:</span> Package B (front + rear) has been your most popular service offering, with peak demand of 12 installations in May 2025.
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                <span className="font-medium">Hourly Rate:</span> Your hourly rate improved significantly from negative values in January to $108.29 in June, indicating improved operational efficiency.
-              </li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold flex items-center gap-3">
-              <Calendar className="h-6 w-6 text-yellow-500" />
-              Seasonal Patterns
-            </h3>
-            <ul className="space-y-3 pl-9">
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Business activity appears to peak in spring months (March-May), with both client numbers and revenue reaching their highest points during this period.
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                After the peak in May, there's a noticeable decline in June, which might indicate a seasonal pattern to monitor.
-              </li>
-            </ul>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold flex items-center gap-3">
-              <TrendingUp className="h-6 w-6 text-purple-500" />
-              Future Outlook
-            </h3>
-            <ul className="space-y-3 pl-9">
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                Based on the current growth trajectory, your business shows strong potential for continued profitability.
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                The consistent improvement in profit margin suggests effective cost management alongside revenue growth.
-              </li>
-              <li className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                The lifetime profit margin of 34.05% indicates a healthy business model.
-              </li>
-            </ul>
-          </div>
+      {/* Data Source Info */}
+      <div className={`p-6 rounded-xl ${
+        darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
+      }`}>
+        <h4 className="text-lg font-semibold mb-4">📊 Data Source</h4>
+        <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+          <p className="mb-2">
+            This dashboard is powered by your Google Sheets data, providing real-time insights into your business performance.
+          </p>
+          <p className="mb-2">
+            <strong>Sheet:</strong> Balance
+          </p>
+          <p className="mb-2">
+            <strong>Data Range:</strong> {totalMonths} months of financial data
+          </p>
+          <p>
+            <strong>Last Update:</strong> Data refreshes automatically when you click the refresh button
+          </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default SummaryTab;
+}
 
