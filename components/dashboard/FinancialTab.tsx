@@ -12,9 +12,9 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
+import type { DashboardTabProps } from '../../types/dashboard';
 
-interface FinancialTabProps {
-  data: any[];
+interface FinancialTabProps extends DashboardTabProps {
   darkMode: boolean;
 }
 

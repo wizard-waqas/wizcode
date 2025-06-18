@@ -4,37 +4,26 @@ import FinancialTab from '../../components/dashboard/FinancialTab';
 import OperationalTab from '../../components/dashboard/OperationalTab';
 import GrowthTab from '../../components/dashboard/GrowthTab';
 import SummaryTab from '../../components/dashboard/SummaryTab';
+import type { 
+  DashboardApiResponse, 
+  BusinessDataWithMargins, 
+  CurrentMonthData, 
+  BusinessSummary,
+  ThemeMode 
+} from '../../types/dashboard';
 
 interface DashboardData {
-  financialData: any[];
-  currentMonth: {
-    expenses: number;
-    revenue: number;
-    profit: number;
-    clients: number;
-    month: string;
-    expensesChange: number;
-    revenueChange: number;
-    profitChange: number;
-    clientsChange: number;
-  };
-  summary: {
-    totalRevenue: number;
-    totalExpenses: number;
-    totalEarnings: number;
-    lifetimeProfitMargin: number;
-    peakRevenueMonth: string;
-    peakRevenue: number;
-    totalMonths: number;
-  };
+  financialData: BusinessDataWithMargins[];
+  currentMonth: CurrentMonthData | null;
+  summary: BusinessSummary;
   lastUpdated: string;
 }
 
 export default function FinancesDashboard() {
-  const [darkMode, setDarkMode] = useState(true);
-  const [activeTab, setActiveTab] = useState('financial');
+  const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [activeTab, setActiveTab] = useState<string>('financial');
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
@@ -48,13 +37,13 @@ export default function FinancesDashboard() {
   }, [darkMode]);
 
   // Fetch data from Google Sheets API
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = async (): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
       
       const response = await fetch('/api/dashboard-data');
-      const result = await response.json();
+      const result: DashboardApiResponse = await response.json();
       
       if (result.success) {
         setDashboardData(result.data);

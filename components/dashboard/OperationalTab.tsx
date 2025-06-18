@@ -10,9 +10,9 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
+import type { DashboardTabProps } from '../../types/dashboard';
 
-interface OperationalTabProps {
-  data: any[];
+interface OperationalTabProps extends DashboardTabProps {
   darkMode: boolean;
 }
 

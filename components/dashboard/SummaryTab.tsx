@@ -1,8 +1,7 @@
 import React from 'react';
+import type { DashboardTabProps } from '../../types/dashboard';
 
-interface SummaryTabProps {
-  data: any[];
-  summary: any;
+interface SummaryTabProps extends DashboardTabProps {
   darkMode: boolean;
 }
 
