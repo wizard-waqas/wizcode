@@ -1,5 +1,5 @@
 import React from "react";
-import {FaFileAlt, FaKeyboard, FaCode, FaCar, FaMoneyBill} from "react-icons/fa";
+import {FaFileAlt, FaKeyboard, FaCode, FaCar, FaMoneyBill, FaLanguage} from "react-icons/fa";
 import {GiKnifeFork} from "react-icons/gi";
 import {MdMenuBook, MdQuiz, MdLinkedCamera} from "react-icons/md";
 import {CgDebug} from "react-icons/cg";
@@ -40,6 +40,13 @@ export default function ToolsPage() {
             href: "/extras/typing-game",
             icon: <FaKeyboard/>,
             img: "/img/extras/typinggame.png"
+        },
+        {
+            text: "Spanish Typing Game",
+            description: "Learn Spanish vocabulary through typing practice.",
+            href: "/extras/spanish-typing-game",
+            icon: <FaLanguage/>,
+            img: "/img/extras/spanish-typing-game.png"
         },
         {
             text: "Recipe Finder",
