@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaCheck, FaTimes, FaRedo, FaPlay } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaRedo, FaPlay, FaVolumeUp } from 'react-icons/fa';
 
 // Spanish sentence database
 const sentenceDatabase = [
@@ -145,8 +145,21 @@ interface Sentence {
 }
 
 const getRandomSentence = (): Sentence => {
-  const randomIndex = Math.floor(Math.random() * sentenceDatabase.length);
-  return sentenceDatabase[randomIndex];
+  // Get custom sentences from localStorage
+  const customSentences = typeof window !== 'undefined' 
+    ? JSON.parse(localStorage.getItem('customSentences') || '[]') 
+    : [];
+  
+  // Combine default and custom sentences
+  const allSentences = [...sentenceDatabase, ...customSentences];
+  
+  if (allSentences.length === 0) {
+    // Fallback to default sentences if no sentences available
+    return sentenceDatabase[0];
+  }
+  
+  const randomIndex = Math.floor(Math.random() * allSentences.length);
+  return allSentences[randomIndex];
 };
 
 export default function SpanishTypingGame() {
@@ -159,13 +172,63 @@ export default function SpanishTypingGame() {
   const [errors, setErrors] = useState(0);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [endTime, setEndTime] = useState<number | null>(null);
+  const [showHint, setShowHint] = useState(false);
+  const [hintTimer, setHintTimer] = useState<NodeJS.Timeout | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const successAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize audio
+  useEffect(() => {
+    successAudioRef.current = new Audio('/audio/success.mp3');
+    successAudioRef.current.volume = 0.3; // Soft volume
+  }, []);
 
   useEffect(() => {
     if (inputRef.current && gamePhase !== GAME_PHASES.MENU && gamePhase !== GAME_PHASES.COMPLETED) {
       inputRef.current.focus();
     }
   }, [gamePhase, currentWordIndex]);
+
+  // Hint timer for phase 3
+  useEffect(() => {
+    if (gamePhase === GAME_PHASES.REVERSE_TRANSLATION && !showHint) {
+      const timer = setTimeout(() => {
+        setShowHint(true);
+      }, 3000);
+      setHintTimer(timer);
+      
+      return () => {
+        if (timer) clearTimeout(timer);
+      };
+    }
+  }, [gamePhase, currentWordIndex, userInput]);
+
+  // Reset hint when user types
+  useEffect(() => {
+    if (userInput && hintTimer) {
+      clearTimeout(hintTimer);
+      setHintTimer(null);
+    }
+  }, [userInput, hintTimer]);
+
+  // Text-to-Speech function
+  const speakSpanish = (text: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'es-ES'; // Spanish language
+      utterance.rate = 0.8; // Slightly slower for learning
+      utterance.volume = 0.7;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Play success sound
+  const playSuccessSound = () => {
+    if (successAudioRef.current) {
+      successAudioRef.current.currentTime = 0; // Reset to start
+      successAudioRef.current.play().catch(e => console.log('Audio play failed:', e));
+    }
+  };
 
   const startGame = () => {
     const sentence = getRandomSentence();
@@ -178,6 +241,12 @@ export default function SpanishTypingGame() {
     setErrors(0);
     setStartTime(Date.now());
     setEndTime(null);
+    setShowHint(false);
+    
+    // Auto-speak the first word
+    setTimeout(() => {
+      speakSpanish(sentence.words[0].spanish);
+    }, 500);
   };
 
   const resetGame = () => {
@@ -190,11 +259,21 @@ export default function SpanishTypingGame() {
     setErrors(0);
     setStartTime(null);
     setEndTime(null);
+    setShowHint(false);
+    if (hintTimer) {
+      clearTimeout(hintTimer);
+      setHintTimer(null);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
     setIsCorrect(null);
+    
+    // Reset hint when user starts typing in phase 3
+    if (gamePhase === GAME_PHASES.REVERSE_TRANSLATION && showHint) {
+      setShowHint(false);
+    }
   };
 
   const checkAnswer = () => {
@@ -214,6 +293,7 @@ export default function SpanishTypingGame() {
     setIsCorrect(isAnswerCorrect);
 
     if (isAnswerCorrect) {
+      playSuccessSound(); // Play success sound
       setTimeout(() => {
         moveToNext();
       }, 1000);
@@ -235,21 +315,31 @@ export default function SpanishTypingGame() {
         setCurrentWordIndex(currentWordIndex + 1);
         setUserInput('');
         setIsCorrect(null);
+        // Auto-speak the next word
+        setTimeout(() => {
+          speakSpanish(currentSentence!.words[currentWordIndex + 1].spanish);
+        }, 500);
       } else {
         setGamePhase(GAME_PHASES.SENTENCE_TYPING);
         setUserInput('');
         setIsCorrect(null);
+        // Auto-speak the complete sentence
+        setTimeout(() => {
+          speakSpanish(currentSentence!.spanish);
+        }, 500);
       }
     } else if (gamePhase === GAME_PHASES.SENTENCE_TYPING) {
       setGamePhase(GAME_PHASES.REVERSE_TRANSLATION);
       setCurrentWordIndex(0);
       setUserInput('');
       setIsCorrect(null);
+      setShowHint(false);
     } else if (gamePhase === GAME_PHASES.REVERSE_TRANSLATION) {
       if (currentWordIndex + 1 < currentSentence!.words.length) {
         setCurrentWordIndex(currentWordIndex + 1);
         setUserInput('');
         setIsCorrect(null);
+        setShowHint(false);
       } else {
         setGamePhase(GAME_PHASES.COMPLETED);
         setEndTime(Date.now());
@@ -282,6 +372,11 @@ export default function SpanishTypingGame() {
     return Math.round((end - startTime) / 1000);
   };
 
+  const getHintText = () => {
+    if (!showHint || !currentSentence) return '';
+    return currentSentence.words[currentWordIndex].spanish.charAt(0);
+  };
+
   const renderMenu = () => (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="max-w-2xl mx-auto text-center">
@@ -296,6 +391,9 @@ export default function SpanishTypingGame() {
             <li>Type the complete Spanish sentence</li>
             <li>Translate English words back to Spanish</li>
           </ol>
+          <p className="mt-4 text-xs text-gray-500">
+            🔊 Voice reading and sound effects included for enhanced learning!
+          </p>
         </div>
         <button 
           onClick={startGame} 
@@ -331,8 +429,15 @@ export default function SpanishTypingGame() {
             {currentSentence!.words[currentWordIndex].english}
           </div>
           <div className="text-sm text-gray-400">Type the Spanish word:</div>
-          <div className="text-3xl font-bold">
+          <div className="text-3xl font-bold flex items-center justify-center gap-4">
             {currentSentence!.words[currentWordIndex].spanish}
+            <button
+              onClick={() => speakSpanish(currentSentence!.words[currentWordIndex].spanish)}
+              className="text-blue hover:text-blue-400 transition-colors"
+              title="Listen to pronunciation"
+            >
+              <FaVolumeUp className="text-xl" />
+            </button>
           </div>
         </div>
         
@@ -401,8 +506,15 @@ export default function SpanishTypingGame() {
             {currentSentence!.english}
           </div>
           <div className="text-sm text-gray-400">Type the complete Spanish sentence:</div>
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold flex items-center justify-center gap-4">
             {currentSentence!.spanish}
+            <button
+              onClick={() => speakSpanish(currentSentence!.spanish)}
+              className="text-blue hover:text-blue-400 transition-colors"
+              title="Listen to pronunciation"
+            >
+              <FaVolumeUp className="text-xl" />
+            </button>
           </div>
         </div>
         
@@ -462,6 +574,11 @@ export default function SpanishTypingGame() {
           <div className="text-3xl font-bold text-blue">
             {currentSentence!.words[currentWordIndex].english}
           </div>
+          {showHint && (
+            <div className="text-sm text-yellow-400">
+              💡 Hint: Starts with "{getHintText()}"
+            </div>
+          )}
         </div>
         
         <div className="space-y-4 mt-8">
@@ -514,7 +631,16 @@ export default function SpanishTypingGame() {
             <strong>Sentence practiced:</strong>
           </div>
           <div className="p-6 bg-gray-800 rounded-lg">
-            <div className="text-xl font-medium">{currentSentence!.spanish}</div>
+            <div className="text-xl font-medium flex items-center justify-center gap-4">
+              {currentSentence!.spanish}
+              <button
+                onClick={() => speakSpanish(currentSentence!.spanish)}
+                className="text-blue hover:text-blue-400 transition-colors"
+                title="Listen to pronunciation"
+              >
+                <FaVolumeUp className="text-lg" />
+              </button>
+            </div>
             <div className="text-sm text-gray-400 mt-2">{currentSentence!.english}</div>
           </div>
           
