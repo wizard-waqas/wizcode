@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaCheck, FaTimes, FaRedo, FaPlay, FaVolumeUp } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaRedo, FaPlay, FaVolumeUp, FaPlus, FaSpinner } from 'react-icons/fa';
 
 // Spanish sentence database
 const sentenceDatabase = [
@@ -177,6 +177,12 @@ export default function SpanishTypingGame() {
   const inputRef = useRef<HTMLInputElement>(null);
   const successAudioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Sentence input state
+  const [inputSentence, setInputSentence] = useState('');
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [translationError, setTranslationError] = useState('');
+  const [translationSuccess, setTranslationSuccess] = useState(false);
+
   // Initialize audio
   useEffect(() => {
     successAudioRef.current = new Audio('/audio/success.mp3');
@@ -263,6 +269,62 @@ export default function SpanishTypingGame() {
     if (hintTimer) {
       clearTimeout(hintTimer);
       setHintTimer(null);
+    }
+  };
+
+  const handleTranslate = async () => {
+    if (!inputSentence.trim()) {
+      setTranslationError('Please enter a sentence to translate');
+      return;
+    }
+
+    setIsTranslating(true);
+    setTranslationError('');
+    setTranslationSuccess(false);
+
+    try {
+      const response = await fetch('/api/openai/translate-sentence', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          englishSentence: inputSentence.trim()
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Translation failed');
+      }
+
+      const result = await response.json();
+      
+      // Save to localStorage
+      const existingCustomSentences = JSON.parse(localStorage.getItem('customSpanishSentences') || '[]');
+      const newSentence = {
+        id: Date.now(),
+        category: result.category || 'custom',
+        spanish: result.spanish,
+        english: result.english,
+        words: result.words || []
+      };
+      
+      existingCustomSentences.push(newSentence);
+      localStorage.setItem('customSpanishSentences', JSON.stringify(existingCustomSentences));
+      
+      setTranslationSuccess(true);
+      setInputSentence('');
+      
+      // Reset success message after 3 seconds
+      setTimeout(() => {
+        setTranslationSuccess(false);
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Translation error:', error);
+      setTranslationError('Failed to translate sentence. Please try again.');
+    } finally {
+      setIsTranslating(false);
     }
   };
 
@@ -395,6 +457,57 @@ export default function SpanishTypingGame() {
             🔊 Voice reading and sound effects included for enhanced learning!
           </p>
         </div>
+
+        {/* Add Custom Sentences Section */}
+        <div className="bg-gray-800 rounded-lg p-6 mb-8">
+          <h3 className="text-xl font-semibold mb-4 text-white">Add Custom Sentences</h3>
+          <p className="text-gray-300 mb-4 text-sm">
+            Enter an English sentence and we'll translate it to Spanish for your typing practice!
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-3 mb-4">
+            <input
+              type="text"
+              value={inputSentence}
+              onChange={(e) => setInputSentence(e.target.value)}
+              placeholder="Enter an English sentence to translate..."
+              className="flex-1 px-4 py-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+              onKeyPress={(e) => e.key === 'Enter' && handleTranslate()}
+            />
+            <button
+              onClick={handleTranslate}
+              disabled={isTranslating || !inputSentence.trim()}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center min-w-[140px]"
+            >
+              {isTranslating ? (
+                <>
+                  <FaSpinner className="animate-spin mr-2" />
+                  Translating...
+                </>
+              ) : (
+                <>
+                  <FaPlus className="mr-2" />
+                  Add Sentence
+                </>
+              )}
+            </button>
+          </div>
+
+          {translationError && (
+            <div className="flex items-center text-red-400 text-sm mb-3">
+              <FaTimes className="mr-2" />
+              {translationError}
+            </div>
+          )}
+
+          {translationSuccess && (
+            <div className="flex items-center text-green-400 text-sm mb-3">
+              <FaCheck className="mr-2" />
+              Sentence added successfully! It will appear in your typing practice.
+            </div>
+          )}
+        </div>
+
         <button 
           onClick={startGame} 
           className="bg-blue hover:bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors flex items-center mx-auto"
