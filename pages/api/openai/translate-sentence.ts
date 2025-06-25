@@ -45,6 +45,10 @@ Make sure the translation is accurate and natural. For the word-by-word breakdow
 
     const translationResult = response.choices[0].message.content;
     
+    if (!translationResult) {
+      return res.status(500).json({ error: "No translation result received" });
+    }
+    
     try {
       const parsedResult = JSON.parse(translationResult);
       res.status(200).json(parsedResult);
