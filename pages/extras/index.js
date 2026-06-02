@@ -1,5 +1,5 @@
 import React from "react";
-import {FaFileAlt, FaKeyboard, FaCode, FaCar, FaMoneyBill, FaLanguage} from "react-icons/fa";
+import {FaFileAlt, FaKeyboard, FaCode, FaMoneyBill, FaLanguage} from "react-icons/fa";
 import {GiKnifeFork} from "react-icons/gi";
 import {MdMenuBook, MdQuiz, MdLinkedCamera} from "react-icons/md";
 import {CgDebug} from "react-icons/cg";
@@ -12,13 +12,6 @@ export default function ToolsPage() {
             href: "/extras/coding-practice",
             icon: <FaCode/>,
             img: "/img/extras/codingpractice.png"
-        },
-        {
-            text: "Wizard Installs",
-            description: "Professional dashcam installation services.",
-            href: "https://wizardinstalls.com/",
-            icon: <FaCar/>,
-            img: "/img/extras/wizardinstalls.png"
         },
         {
             text: "Your Rich Life",
